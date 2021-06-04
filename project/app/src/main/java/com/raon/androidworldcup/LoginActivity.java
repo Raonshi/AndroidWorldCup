@@ -24,6 +24,10 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+        //1. 아이디, 비밀번호 값 받아와야함
+        //2. 임시로 로그인 테스트용 아이디, 비밀번호 변수 만들어서 로그인 테스트
+        //3. 로그인 성공하면 로그인 액티비티를 종료.
+
 
     }
 }
