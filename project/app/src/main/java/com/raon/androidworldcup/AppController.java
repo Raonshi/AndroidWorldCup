@@ -6,18 +6,25 @@
 
 package com.raon.androidworldcup;
 
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+
 public class AppController {
 
     private static AppController instance = null;
-
+    
+    
     AppController(){
         System.out.printf("AppController Singleton instance has Created!!");
     }
-
+    
     public static AppController Singleton(){
         if(instance == null){
             instance = new AppController();
         }
         return instance;
     }
+    
+    
 }

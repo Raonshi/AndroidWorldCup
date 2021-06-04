@@ -16,6 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginActivity" android:label="로그인 액티비티"/>
+        <activity android:name=".RegisterActivity" android:label="회원가입 액티비티"/>
+        <activity android:name=".CreateVoteActivity" android:label="투표생성 액티비티"/>
+        <activity android:name=".MyVoteActivity" android:label="나의 투표 액티비티"/>
+
     </application>
 
 </manifest>
