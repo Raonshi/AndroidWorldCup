@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">AndroidWorldCup</string>
+
+
+
+    <string name="side_login">로그인</string>
+    <string name="side_logout">로그아웃</string>
+    <string name="side_register">회원가입</string>
+    <string name="side_create_vote">투표생성</string>
+    <string name="side_my_vote">투표만들기</string>
+
+
+</resources>
