@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">AndroidWorldCup</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_login">로그인</string>
+    <string name="menu_logout">로그아웃</string>
+    <string name="menu_register">회원가입</string>
+    <string name="menu_create_vote">투표 만들기</string>
+    <string name="menu_my_vote">나의 투표</string>
+</resources>
