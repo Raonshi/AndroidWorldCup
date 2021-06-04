@@ -8,10 +8,12 @@ import android.widget.ListView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.raon.androidworldcup.ItemList.ItemListAdapter;
+
 public class CreateVoteActivity extends AppCompatActivity {
 
     private ListView listView;
-    private ListAdapter list;
+    private ItemListAdapter list;
     private ImageButton backBtn;
 
     @Override

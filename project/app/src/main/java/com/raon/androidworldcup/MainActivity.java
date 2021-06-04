@@ -10,14 +10,24 @@
 
 package com.raon.androidworldcup;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+
+import com.raon.androidworldcup.VoteList.Vote;
+import com.raon.androidworldcup.VoteList.VoteListAdapter;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,9 +35,14 @@ public class MainActivity extends AppCompatActivity {
     ImageButton sideBtn;
     LinearLayout sideMenu, sideLogin, sideLogout, sideRegister, sideCreateVote, sideMyVote;
     Button sideBtnLogin, sideBtnLogout, sideBtnRegister, sideBtnCreateVote, sideBtnMyVote;
-    
+    RecyclerView voteList;
+
+    //메인화면 투표 목록
+    VoteListAdapter adapter;
+    ArrayList<Vote> list;
+
     //로그인 유무
-    boolean isLogin = false;
+    boolean isLogin = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
         //위젯 Init
         InitWidget();
+
+        //투표 목록 생성
+        InitVoteList();
 
         sideBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +127,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+
+        //투표 목록 갱신
+        adapter.notifyDataSetChanged();
     }
 
 
@@ -128,5 +152,31 @@ public class MainActivity extends AppCompatActivity {
         sideBtnRegister = (Button)findViewById(R.id.sideBtnRegister);
         sideBtnCreateVote = (Button)findViewById(R.id.sideBtnCreateVote);
         sideBtnMyVote = (Button)findViewById(R.id.sideBtnMyVote);
+
+        //투표 목록
+        voteList = (RecyclerView)findViewById(R.id.voteList);
+    }
+
+    void InitVoteList(){
+        list = new ArrayList();
+        adapter = new VoteListAdapter(list);
+
+        voteList.setAdapter(adapter);
+        voteList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+
+        AddItem(ResourcesCompat.getDrawable(getResources(),R.drawable.baseline_account_circle_18, null), "테스트입니다.1");
+        AddItem(ResourcesCompat.getDrawable(getResources(),R.drawable.baseline_account_circle_18, null), "테스트입니다.2");
+        AddItem(ResourcesCompat.getDrawable(getResources(),R.drawable.baseline_account_circle_18, null), "테스트입니다.3");
+        AddItem(ResourcesCompat.getDrawable(getResources(),R.drawable.baseline_account_circle_18, null), "테스트입니다.4");
+    }
+
+    void AddItem(Drawable icon, String title){
+        Vote item = new Vote();
+
+        item.setIcon(icon);
+        item.setTitle(title);
+
+        list.add(item);
     }
 }

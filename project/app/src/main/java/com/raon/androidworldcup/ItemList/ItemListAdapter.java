@@ -1,4 +1,4 @@
-package com.raon.androidworldcup;
+package com.raon.androidworldcup.ItemList;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,18 +7,19 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.raon.androidworldcup.R;
 
 import java.util.ArrayList;
 
-public class ListAdapter extends BaseAdapter {
+public class ItemListAdapter extends BaseAdapter {
 
-    private ArrayList<ListItem> list = new ArrayList<ListItem>();
+    private ArrayList<Item> list = new ArrayList<Item>();
     private ImageView icon;
     private EditText text;
 
     public void addItem(int icon, String text){
-        ListItem item = new ListItem();
+        Item item = new Item();
 
         item.setIcon(icon);
         item.setText(text);
@@ -48,13 +49,13 @@ public class ListAdapter extends BaseAdapter {
 
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.list_item, parent, false);
+            convertView = inflater.inflate(R.layout.item, parent, false);
         }
 
         icon = convertView.findViewById(R.id.list_item_image);
         text = convertView.findViewById(R.id.list_item_text);
 
-        ListItem item = list.get(position);
+        Item item = list.get(position);
 
 
         icon.setImageResource(item.getIcon());
