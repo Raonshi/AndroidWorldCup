@@ -122,6 +122,7 @@
     <!-- 투표 생성 레이아웃 2 -->
     <LinearLayout
         android:id="@+id/createVoteLayout2"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -145,6 +146,7 @@
         </ListView>
 
         <Button
+            android:id="@+id/createVoteCompleteBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"

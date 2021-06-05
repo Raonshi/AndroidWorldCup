@@ -180,8 +180,9 @@
 
     <!-- 이하 여백에 화면 레이아웃을 작성할 것 -->
 
-    <view class="androidx.recyclerview.widget.RecyclerView"
+    <view
         android:id="@+id/voteList"
+        class="androidx.recyclerview.widget.RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_margin="30dp"

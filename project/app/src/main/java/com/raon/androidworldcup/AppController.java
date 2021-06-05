@@ -6,6 +6,7 @@
 
 package com.raon.androidworldcup;
 
+import android.content.Intent;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -14,9 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AppController {
 
+    //로그인 유무
+    public boolean isLogin = false;
+
     private static AppController instance = null;
-    
-    
     AppController(){
         System.out.printf("AppController Singleton instance has Created!!");
     }
@@ -27,6 +29,4 @@ public class AppController {
         }
         return instance;
     }
-    
-    
 }
