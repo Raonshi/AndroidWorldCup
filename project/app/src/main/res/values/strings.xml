@@ -7,7 +7,7 @@
     <string name="side_logout">로그아웃</string>
     <string name="side_register">회원가입</string>
     <string name="side_create_vote">투표생성</string>
-    <string name="side_my_vote">투표만들기</string>
+    <string name="side_my_vote">나의투표</string>
 
 
     <string name="register_id">▶사용할 아이디를 입력해주세요.</string>

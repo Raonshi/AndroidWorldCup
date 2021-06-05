@@ -1,6 +1,6 @@
-package com.raon.androidworldcup;
+package com.raon.androidworldcup.ItemList;
 
-public class ListItem {
+public class Item {
 
     private int icon;
     private String text;

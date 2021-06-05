@@ -10,14 +10,25 @@
 
 package com.raon.androidworldcup;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+
+import com.raon.androidworldcup.VoteList.Vote;
+import com.raon.androidworldcup.VoteList.VoteListAdapter;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,9 +36,14 @@ public class MainActivity extends AppCompatActivity {
     ImageButton sideBtn;
     LinearLayout sideMenu, sideLogin, sideLogout, sideRegister, sideCreateVote, sideMyVote;
     Button sideBtnLogin, sideBtnLogout, sideBtnRegister, sideBtnCreateVote, sideBtnMyVote;
-    
+    RecyclerView voteList;
+
+    //메인화면 투표 목록
+    VoteListAdapter adapter;
+    ArrayList<Vote> list;
+
     //로그인 유무
-    boolean isLogin = false;
+    //public boolean isLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,29 +51,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
-        //위젯 Init
         InitWidget();
 
+        //투표 목록 생성
+        InitVoteList();
+        
         sideBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(sideMenu.getVisibility() == View.GONE){
                     sideMenu.setVisibility(View.VISIBLE);
-                    
-                    if(isLogin == true){
-                        sideLogin.setVisibility(View.GONE);
-                        sideLogout.setVisibility(View.VISIBLE);
-                        sideRegister.setVisibility(View.GONE);
-                        sideCreateVote.setVisibility(View.VISIBLE);
-                        sideMyVote.setVisibility(View.VISIBLE);
-                    }
-                    else{
-                        sideLogin.setVisibility(View.VISIBLE);
-                        sideLogout.setVisibility(View.GONE);
-                        sideRegister.setVisibility(View.VISIBLE);
-                        sideCreateVote.setVisibility(View.VISIBLE);
-                        sideMyVote.setVisibility(View.GONE);
-                    }
                 }
                 else{
                     sideMenu.setVisibility(View.GONE);
@@ -79,7 +82,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //로그인 해제 동작 수행
-                
+                AppController.Singleton().isLogin = false;
+
+                WidgetVisible();
             }
         });
 
@@ -96,8 +101,18 @@ public class MainActivity extends AppCompatActivity {
         sideBtnCreateVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CreateVoteActivity.class);
-                startActivity(intent);
+                if(AppController.Singleton().isLogin){
+                    Intent intent = new Intent(getApplicationContext(), CreateVoteActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    AlertDialog.Builder loginAlert = new AlertDialog.Builder(MainActivity.this);
+
+                    loginAlert.setTitle("로그인 알림");
+                    loginAlert.setMessage("로그인되어 있지 않습니다!\n로그인 후 이용 바랍니다.");
+                    loginAlert.setPositiveButton("확인", null);
+                    loginAlert.show();
+                }
             }
         });
 
@@ -105,28 +120,93 @@ public class MainActivity extends AppCompatActivity {
         sideBtnMyVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MyVoteActivity.class);
-                startActivity(intent);
+                if(AppController.Singleton().isLogin){
+                    Intent intent = new Intent(getApplicationContext(), CreateVoteActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    AlertDialog.Builder loginAlert = new AlertDialog.Builder(MainActivity.this);
+
+                    loginAlert.setTitle("로그인 알림");
+                    loginAlert.setMessage("로그인되어 있지 않습니다!\n로그인 후 이용 바랍니다.");
+                    loginAlert.setPositiveButton("확인", null);
+                    loginAlert.show();
+                }
             }
         });
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        WidgetVisible();
+
+        //투표 목록 갱신
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 현재 액티비티에서 사용할 위젯들을 선언한다.
+     * onCreate함수에서 한번만 실행한다.
+     */
     void InitWidget(){
-        //사이드메뉴
-        sideBtn = (ImageButton) findViewById(R.id.sideBtn);
-
         sideMenu = (LinearLayout)findViewById(R.id.sideMenu);
-        sideLogin = (LinearLayout)findViewById(R.id.sideLogin);
-        sideLogout = (LinearLayout)findViewById(R.id.sideLogout);
-        sideRegister = (LinearLayout)findViewById(R.id.sideRegister);
-        sideCreateVote = (LinearLayout)findViewById(R.id.sideCreateVote);
-        sideMyVote = (LinearLayout)findViewById(R.id.sideMyVote);
-
+        sideBtn = (ImageButton)findViewById(R.id.sideBtn);
         sideBtnLogin = (Button)findViewById(R.id.sideBtnLogin);
         sideBtnLogout = (Button)findViewById(R.id.sideBtnLogout);
         sideBtnRegister = (Button)findViewById(R.id.sideBtnRegister);
         sideBtnCreateVote = (Button)findViewById(R.id.sideBtnCreateVote);
         sideBtnMyVote = (Button)findViewById(R.id.sideBtnMyVote);
+        sideLogin = (LinearLayout)findViewById(R.id.sideLogin);
+        sideLogout = (LinearLayout)findViewById(R.id.sideLogout);
+        sideRegister = (LinearLayout)findViewById(R.id.sideRegister);
+        sideCreateVote = (LinearLayout)findViewById(R.id.sideCreateVote);
+        sideMyVote = (LinearLayout)findViewById(R.id.sideMyVote);
+        voteList = (RecyclerView)findViewById(R.id.voteList);
+
+        WidgetVisible();
+    }
+
+    void WidgetVisible(){
+        //위젯 visible 설정
+        if(AppController.Singleton().isLogin){
+            sideLogin.setVisibility(View.GONE);
+            sideLogout.setVisibility(View.VISIBLE);
+            sideRegister.setVisibility(View.GONE);
+            sideCreateVote.setVisibility(View.VISIBLE);
+            sideMyVote.setVisibility(View.VISIBLE);
+        }
+        else{
+            sideLogin.setVisibility(View.VISIBLE);
+            sideLogout.setVisibility(View.GONE);
+            sideRegister.setVisibility(View.VISIBLE);
+            sideCreateVote.setVisibility(View.VISIBLE);
+            sideMyVote.setVisibility(View.GONE);
+        }
+    }
+
+
+    void InitVoteList(){
+        list = new ArrayList();
+        adapter = new VoteListAdapter(list);
+
+        voteList.setAdapter(adapter);
+        voteList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        AddItem(ResourcesCompat.getDrawable(getResources(),R.drawable.baseline_account_circle_18, null), "테스트입니다.1");
+        AddItem(ResourcesCompat.getDrawable(getResources(),R.drawable.baseline_account_circle_18, null), "테스트입니다.2");
+        AddItem(ResourcesCompat.getDrawable(getResources(),R.drawable.baseline_account_circle_18, null), "테스트입니다.3");
+        AddItem(ResourcesCompat.getDrawable(getResources(),R.drawable.baseline_account_circle_18, null), "테스트입니다.4");
+    }
+
+    void AddItem(Drawable icon, String title){
+        Vote item = new Vote();
+
+        item.setIcon(icon);
+        item.setTitle(title);
+
+        list.add(item);
     }
 }
