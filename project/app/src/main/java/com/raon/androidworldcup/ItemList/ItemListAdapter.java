@@ -1,11 +1,13 @@
 package com.raon.androidworldcup.ItemList;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.raon.androidworldcup.R;
@@ -15,10 +17,10 @@ import java.util.ArrayList;
 public class ItemListAdapter extends BaseAdapter {
 
     private ArrayList<Item> list = new ArrayList<Item>();
-    private ImageView icon;
+    private ImageButton icon;
     private EditText text;
 
-    public void addItem(int icon, String text){
+    public void addItem(ImageButton icon, String text){
         Item item = new Item();
 
         item.setIcon(icon);
@@ -58,7 +60,7 @@ public class ItemListAdapter extends BaseAdapter {
         Item item = list.get(position);
 
 
-        icon.setImageResource(item.getIcon());
+        icon = item.getIcon();
         text.setText(item.getText());
 
         return convertView;

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="items">
+        <item>8강</item>
+        <item>16강</item>
+        <item>32강</item>
+    </string-array>
+</resources>
