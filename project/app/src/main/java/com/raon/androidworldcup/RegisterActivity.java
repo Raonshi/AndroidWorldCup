@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RegisterActivity extends AppCompatActivity {
-
     EditText registerId, registerPw, registerPwRe;
     Button registerIdCheckBtn, registerBtn;
     ImageButton backBtn;

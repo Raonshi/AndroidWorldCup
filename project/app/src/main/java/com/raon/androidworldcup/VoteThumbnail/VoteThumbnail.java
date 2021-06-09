@@ -1,4 +1,4 @@
-package com.raon.androidworldcup.VoteList;
+package com.raon.androidworldcup.VoteThumbnail;
 
 public class VoteThumbnail {
     private String title, date;

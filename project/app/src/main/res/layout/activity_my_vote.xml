@@ -13,17 +13,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#F0F0F0">
+        android:background="@color/appBar">
 
         <ImageButton
             android:id="@+id/backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_arrow_back_24"/>
+            android:src="@drawable/baseline_arrow_back_24"
+            android:backgroundTint="@color/topBtn"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginHorizontal="20dp"
             android:gravity="center|left"
             android:text="나의 투표"
             android:textSize="20sp"

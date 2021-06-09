@@ -16,7 +16,6 @@ import com.raon.androidworldcup.Communication.voteDTO;
 import java.util.ArrayList;
 
 public class MyVoteActivity extends AppCompatActivity {
-
     ImageButton backBtn;
     ArrayList<voteDTO> myDTOList;
     GridView myVoteGrid;

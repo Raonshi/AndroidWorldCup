@@ -20,6 +20,8 @@
         <activity android:name=".RegisterActivity" android:label="회원가입 액티비티"/>
         <activity android:name=".CreateVoteActivity" android:label="투표생성 액티비티"/>
         <activity android:name=".MyVoteActivity" android:label="나의 투표 액티비티"/>
+        <activity android:name=".JoinVoteActivity" android:label="투표 참여 액티비티"/>
+        <activity android:name=".ResultVoteActivity" android:label="투표 결과 액티비티"/>
 
     </application>
 

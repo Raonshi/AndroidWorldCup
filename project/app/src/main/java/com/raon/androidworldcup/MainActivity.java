@@ -16,21 +16,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 
 import com.raon.androidworldcup.Communication.voteDTO;
-import com.raon.androidworldcup.VoteList.VoteThumbnail;
-import com.raon.androidworldcup.VoteList.VoteThumbnailAdapter;
+import com.raon.androidworldcup.VoteThumbnail.VoteThumbnailAdapter;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
     //위젯 선언
     ImageButton sideBtn;
     LinearLayout sideMenu, sideLogin, sideLogout, sideRegister, sideCreateVote, sideMyVote;
@@ -45,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
+
 
         InitWidget();
 
@@ -76,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //로그인 해제 동작 수행
-                AppController.Singleton().isLogin = false;
+                AppData.Singleton().isLogin = false;
 
                 WidgetVisible();
             }
@@ -95,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         sideBtnCreateVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AppController.Singleton().isLogin){
+                if(AppData.Singleton().isLogin){
                     Intent intent = new Intent(getApplicationContext(), CreateVoteActivity.class);
                     startActivity(intent);
                 }
@@ -114,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         sideBtnMyVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AppController.Singleton().isLogin){
+                if(AppData.Singleton().isLogin){
                     Intent intent = new Intent(getApplicationContext(), MyVoteActivity.class);
                     startActivity(intent);
                 }
@@ -165,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
     void WidgetVisible(){
         //위젯 visible 설정
-        if(AppController.Singleton().isLogin){
+        if(AppData.Singleton().isLogin){
             sideLogin.setVisibility(View.GONE);
             sideLogout.setVisibility(View.VISIBLE);
             sideRegister.setVisibility(View.GONE);

@@ -1,6 +1,7 @@
-package com.raon.androidworldcup.VoteList;
+package com.raon.androidworldcup.VoteThumbnail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.raon.androidworldcup.Communication.voteDTO;
+import com.raon.androidworldcup.JoinVoteActivity;
+import com.raon.androidworldcup.LoginActivity;
 import com.raon.androidworldcup.R;
 
 import java.util.ArrayList;
@@ -59,11 +62,17 @@ public class VoteThumbnailAdapter extends BaseAdapter {
         TextView title = convertView.findViewById(R.id.voteTitle);
         TextView date = convertView.findViewById(R.id.voteDate);
         Button btn = convertView.findViewById(R.id.voteBtn);
+
+        //투표 제목과 기한을 연결
+        title.setText(thumbnails.get(position).getTitle());
+        date.setText(thumbnails.get(position).getDate());
+
         //투표 썸네일 클릭시 동작 -> 투표 참가 화면으로 이동해야함.
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context.getApplicationContext(), JoinVoteActivity.class);
+                context.startActivity(intent);
             }
         });
 

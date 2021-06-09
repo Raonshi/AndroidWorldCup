@@ -1,6 +1,5 @@
 package com.raon.androidworldcup;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     ImageButton backBtn;
     Button loginBtn;
 
-    //기타 객체
+    //통신 클라이언트 객체
     private Client client;
 
 
@@ -52,9 +51,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                AppController.Singleton().isLogin = true;
+                //테스트코드
+                AppData.Singleton().id ="test";
+                AppData.Singleton().isLogin = true;
                 finish();
-                /*
+
+                 /*
                 ArrayList<userDTO> user;
                 boolean idCheck = true;
                 String id = idInput.getText().toString();
@@ -67,14 +69,15 @@ public class LoginActivity extends AppCompatActivity {
                 userDTO.setUser_id(id);
                 userDTO.setUser_pwd(pw);
 
-                AppController.Singleton().isLogin = client.userDTOCom(userDTO, "select");
+                AppData.Singleton().isLogin = client.userDTOCom(userDTO, "select");
 
                 //로그인 성공
-                if(AppController.Singleton().isLogin){
+                if(AppData.Singleton().isLogin){
                     user = client.getUserList();
 
                     for(int i = 0; i < user.size(); i++){
                         if(id.equals(user.get(i).getUser_id()) && pw.equals(user.get(i).getUser_pwd())){
+                            AppData.Singleton().id = id;
                             Toast.makeText(getApplicationContext(), "로그인성공", Toast.LENGTH_SHORT).show();
                             finish();
                         }
@@ -94,15 +97,6 @@ public class LoginActivity extends AppCompatActivity {
                  */
             }
         });
-
-
-
-
-
-
-        //1. 아이디, 비밀번호 값 받아와야함
-        //2. 임시로 로그인 테스트용 아이디, 비밀번호 변수 만들어서 로그인 테스트
-        //3. 로그인 성공하면 로그인 액티비티를 종료.
 
 
 

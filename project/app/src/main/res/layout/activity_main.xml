@@ -12,17 +12,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F0F0F0">
+        android:orientation="horizontal"
+        android:background="@color/appBar">
 
         <ImageButton
             android:id="@+id/sideBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_reorder_24"/>
+            android:src="@drawable/baseline_reorder_24"
+            android:backgroundTint="@color/topBtn"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginHorizontal="20dp"
             android:gravity="center|left"
             android:text="W Combine"
             android:textSize="20sp"
@@ -190,15 +193,6 @@
         android:numColumns="2"
         android:verticalSpacing="10dp"
         android:horizontalSpacing="10dp"/>
-
-    <view
-        android:visibility="gone"
-        android:id="@+id/voteList"
-        class="androidx.recyclerview.widget.RecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_margin="30dp"
-        android:scrollbars="none" />
 
 
 </LinearLayout>

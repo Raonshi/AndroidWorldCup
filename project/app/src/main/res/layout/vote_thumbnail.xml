@@ -17,17 +17,21 @@
 
         <TextView
             android:id="@+id/voteTitle"
-            android:layout_width="350dp"
+            android:layout_width="150dp"
             android:layout_height="50dp"
             android:background="#f0f0f0"
+            android:layout_gravity="center"
             android:text="투표제목"
+            android:textStyle="bold"
             android:gravity="center" />
         <TextView
             android:id="@+id/voteDate"
-            android:layout_width="350dp"
+            android:layout_width="150dp"
             android:layout_height="50dp"
             android:background="#f0f0f0"
+            android:layout_gravity="center"
             android:text="투표기한"
+            android:textStyle="bold"
             android:gravity="center" />
 
     </LinearLayout>
