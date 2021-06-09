@@ -10,23 +10,22 @@
 
 package com.raon.androidworldcup;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 
-import com.raon.androidworldcup.VoteList.Vote;
-import com.raon.androidworldcup.VoteList.VoteListAdapter;
+import com.raon.androidworldcup.Communication.voteDTO;
+import com.raon.androidworldcup.VoteList.VoteThumbnail;
+import com.raon.androidworldcup.VoteList.VoteThumbnailAdapter;
 
 import java.util.ArrayList;
 
@@ -36,14 +35,10 @@ public class MainActivity extends AppCompatActivity {
     ImageButton sideBtn;
     LinearLayout sideMenu, sideLogin, sideLogout, sideRegister, sideCreateVote, sideMyVote;
     Button sideBtnLogin, sideBtnLogout, sideBtnRegister, sideBtnCreateVote, sideBtnMyVote;
-    RecyclerView voteList;
 
-    //메인화면 투표 목록
-    VoteListAdapter adapter;
-    ArrayList<Vote> list;
-
-    //로그인 유무
-    //public boolean isLogin = false;
+    //투표 리스트
+    GridView voteGrid;
+    ArrayList<voteDTO> voteList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         InitWidget();
 
-        //투표 목록 생성
-        InitVoteList();
+        Test();
         
         sideBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(AppController.Singleton().isLogin){
-                    Intent intent = new Intent(getApplicationContext(), CreateVoteActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MyVoteActivity.class);
                     startActivity(intent);
                 }
                 else{
@@ -144,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         WidgetVisible();
 
         //투표 목록 갱신
-        adapter.notifyDataSetChanged();
+        //adapter.notifyDataSetChanged();
     }
 
     /**
@@ -164,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         sideRegister = (LinearLayout)findViewById(R.id.sideRegister);
         sideCreateVote = (LinearLayout)findViewById(R.id.sideCreateVote);
         sideMyVote = (LinearLayout)findViewById(R.id.sideMyVote);
-        voteList = (RecyclerView)findViewById(R.id.voteList);
+        //voteList = (RecyclerView)findViewById(R.id.voteList);
 
         WidgetVisible();
     }
@@ -188,25 +182,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    void InitVoteList(){
-        list = new ArrayList();
-        adapter = new VoteListAdapter(list);
 
-        voteList.setAdapter(adapter);
-        voteList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+    void Test(){
+        voteList = new ArrayList<voteDTO>();
 
-        AddItem(ResourcesCompat.getDrawable(getResources(),R.drawable.baseline_account_circle_18, null), "테스트입니다.1");
-        AddItem(ResourcesCompat.getDrawable(getResources(),R.drawable.baseline_account_circle_18, null), "테스트입니다.2");
-        AddItem(ResourcesCompat.getDrawable(getResources(),R.drawable.baseline_account_circle_18, null), "테스트입니다.3");
-        AddItem(ResourcesCompat.getDrawable(getResources(),R.drawable.baseline_account_circle_18, null), "테스트입니다.4");
+        CreateVoteDTO(30);
+
+        //ListAdapter adapter = new ArrayAdapter<voteDTO>(this, android.R.layout.simple_list_item_1, voteList);
+        VoteThumbnailAdapter adapter = new VoteThumbnailAdapter(this);
+        voteGrid = findViewById(R.id.mainVoteGrid);
+        voteGrid.setAdapter(adapter);
+
+        //테스트 투표정보 입력
+        for(int i = 0; i < voteList.size(); i++){
+            //DTO리스트에서 DTO객체를 하나씩 호출
+            voteDTO dto = voteList.get(i);
+
+            adapter.addItem(dto);
+
+        }
     }
 
-    void AddItem(Drawable icon, String title){
-        Vote item = new Vote();
+    void CreateVoteDTO(int count){
+        for(int i = 0; i < count; i++){
+            voteDTO dto = new voteDTO();
+            dto.setVote_title("testing"+(i+1));
+            dto.setUser_id("tester" + (i+1));
+            dto.setVote_day("2021-06-11");
+            dto.setVote_item1(20);
+            dto.setVote_item2(30);
+            dto.setVote_item3(10);
 
-        item.setIcon(icon);
-        item.setTitle(title);
-
-        list.add(item);
+            voteList.add(dto);
+        }
     }
 }

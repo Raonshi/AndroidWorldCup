@@ -31,6 +31,19 @@
 
     </LinearLayout>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
+
     <!-- 이하 여백에 화면 레이아웃을 작성할 것 -->
 
+    <GridView
+        android:id="@+id/myVoteGrid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="200dp"
+        android:layout_marginHorizontal="20dp"
+        android:numColumns="2"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"/>
 </LinearLayout>

@@ -38,4 +38,10 @@ public class AppController {
         }
         return instance;
     }
+
+
+    public void StatelessWidget(){
+
+    }
+
 }

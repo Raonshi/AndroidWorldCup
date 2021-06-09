@@ -16,7 +16,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.raon.androidworldcup.ItemList.ItemListAdapter;
-import com.raon.androidworldcup.Json.VoteJson;
 
 import java.util.ArrayList;
 
@@ -71,13 +70,6 @@ public class CreateVoteActivity extends AppCompatActivity {
         createVoteCompleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                VoteJson vote = new VoteJson();
-                vote.SetJson("test.json", AppController.Singleton().title,
-                        AppController.Singleton().category, AppController.Singleton().decription,
-                        AppController.Singleton().tounament);
-
-
 
                 Toast.makeText(getApplicationContext(), "투표 생성 완료", Toast.LENGTH_SHORT).show();
                 finish();
