@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/voteImage"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:background="#F0F0FF" />
+    <TextView
+        android:id="@+id/voteTitle"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:background="#f0f0f0"
+        android:text="투표 1"
+        android:gravity="center" />
+
+
+</LinearLayout>

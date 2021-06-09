@@ -1,78 +1,212 @@
+/*
+메인 액티비티
+이 액티비티는 가장 먼저 실행되는 액티비티다.
+
+필요기능
+1. 현재 참여 가능한 투표 리스트를 보여줘야함.
+2. 투표 리스트는 페이지 전환이 가능해야하며 하나를 클릭하면 해당 투표 페이지로 이동한다.
+
+ */
+
 package com.raon.androidworldcup;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Menu;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
+import com.raon.androidworldcup.VoteList.Vote;
+import com.raon.androidworldcup.VoteList.VoteListAdapter;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    public boolean isLogin = false;
+    //위젯 선언
+    ImageButton sideBtn;
+    LinearLayout sideMenu, sideLogin, sideLogout, sideRegister, sideCreateVote, sideMyVote;
+    Button sideBtnLogin, sideBtnLogout, sideBtnRegister, sideBtnCreateVote, sideBtnMyVote;
+    RecyclerView voteList;
 
-    private AppBarConfiguration mAppBarConfiguration;
+    //메인화면 투표 목록
+    VoteListAdapter adapter;
+    ArrayList<Vote> list;
+
+    //로그인 유무
+    //public boolean isLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
-        //상단의 툴바
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        InitWidget();
 
-        /*
-        //좌측 하단의 플로팅 버튼
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        //투표 목록 생성
+        InitVoteList();
+        
+        sideBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                if(sideMenu.getVisibility() == View.GONE){
+                    sideMenu.setVisibility(View.VISIBLE);
+                }
+                else{
+                    sideMenu.setVisibility(View.GONE);
+                }
             }
         });
-         */
 
-        //드로어 기능을 사용하기 위한 바탕 뷰
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        //왼쪽 드래그로 볼 수 있는 사이드뷰
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        //로그인 버튼 동작
+        sideBtnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
-        //사이드뷰에 정의되는 레이아웃들
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_login, R.id.nav_logout, R.id.nav_register, R.id.nav_create_vote, R.id.nav_my_vote)
-                .setDrawerLayout(drawer)
-                .build();
+        //로그아웃 버튼 동작
+        sideBtnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //로그인 해제 동작 수행
+                AppController.Singleton().isLogin = false;
 
-        //
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+                WidgetVisible();
+            }
+        });
 
-        //
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        //회원가입 버튼 동작
+        sideBtnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //투표생성 버튼 동작
+        sideBtnCreateVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(AppController.Singleton().isLogin){
+                    Intent intent = new Intent(getApplicationContext(), CreateVoteActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    AlertDialog.Builder loginAlert = new AlertDialog.Builder(MainActivity.this);
+
+                    loginAlert.setTitle("로그인 알림");
+                    loginAlert.setMessage("로그인되어 있지 않습니다!\n로그인 후 이용 바랍니다.");
+                    loginAlert.setPositiveButton("확인", null);
+                    loginAlert.show();
+                }
+            }
+        });
+
+        //나의 투표 버튼 동작
+        sideBtnMyVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(AppController.Singleton().isLogin){
+                    Intent intent = new Intent(getApplicationContext(), CreateVoteActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    AlertDialog.Builder loginAlert = new AlertDialog.Builder(MainActivity.this);
+
+                    loginAlert.setTitle("로그인 알림");
+                    loginAlert.setMessage("로그인되어 있지 않습니다!\n로그인 후 이용 바랍니다.");
+                    loginAlert.setPositiveButton("확인", null);
+                    loginAlert.show();
+                }
+            }
+        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+    protected void onResume() {
+        super.onResume();
+
+        WidgetVisible();
+
+        //투표 목록 갱신
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 현재 액티비티에서 사용할 위젯들을 선언한다.
+     * onCreate함수에서 한번만 실행한다.
+     */
+    void InitWidget(){
+        sideMenu = (LinearLayout)findViewById(R.id.sideMenu);
+        sideBtn = (ImageButton)findViewById(R.id.sideBtn);
+        sideBtnLogin = (Button)findViewById(R.id.sideBtnLogin);
+        sideBtnLogout = (Button)findViewById(R.id.sideBtnLogout);
+        sideBtnRegister = (Button)findViewById(R.id.sideBtnRegister);
+        sideBtnCreateVote = (Button)findViewById(R.id.sideBtnCreateVote);
+        sideBtnMyVote = (Button)findViewById(R.id.sideBtnMyVote);
+        sideLogin = (LinearLayout)findViewById(R.id.sideLogin);
+        sideLogout = (LinearLayout)findViewById(R.id.sideLogout);
+        sideRegister = (LinearLayout)findViewById(R.id.sideRegister);
+        sideCreateVote = (LinearLayout)findViewById(R.id.sideCreateVote);
+        sideMyVote = (LinearLayout)findViewById(R.id.sideMyVote);
+        voteList = (RecyclerView)findViewById(R.id.voteList);
+
+        WidgetVisible();
+    }
+
+    void WidgetVisible(){
+        //위젯 visible 설정
+        if(AppController.Singleton().isLogin){
+            sideLogin.setVisibility(View.GONE);
+            sideLogout.setVisibility(View.VISIBLE);
+            sideRegister.setVisibility(View.GONE);
+            sideCreateVote.setVisibility(View.VISIBLE);
+            sideMyVote.setVisibility(View.VISIBLE);
+        }
+        else{
+            sideLogin.setVisibility(View.VISIBLE);
+            sideLogout.setVisibility(View.GONE);
+            sideRegister.setVisibility(View.VISIBLE);
+            sideCreateVote.setVisibility(View.VISIBLE);
+            sideMyVote.setVisibility(View.GONE);
+        }
+    }
+
+
+    void InitVoteList(){
+        list = new ArrayList();
+        adapter = new VoteListAdapter(list);
+
+        voteList.setAdapter(adapter);
+        voteList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        AddItem(ResourcesCompat.getDrawable(getResources(),R.drawable.baseline_account_circle_18, null), "테스트입니다.1");
+        AddItem(ResourcesCompat.getDrawable(getResources(),R.drawable.baseline_account_circle_18, null), "테스트입니다.2");
+        AddItem(ResourcesCompat.getDrawable(getResources(),R.drawable.baseline_account_circle_18, null), "테스트입니다.3");
+        AddItem(ResourcesCompat.getDrawable(getResources(),R.drawable.baseline_account_circle_18, null), "테스트입니다.4");
+    }
+
+    void AddItem(Drawable icon, String title){
+        Vote item = new Vote();
+
+        item.setIcon(icon);
+        item.setTitle(title);
+
+        list.add(item);
     }
 }
