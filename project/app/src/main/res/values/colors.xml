@@ -12,5 +12,6 @@
     <color name="giveUpBtn">#96CE14</color>
     <color name="appBar">#D6E4FF</color>
     <color name="topBtn">#6690FF</color>
+    <color name="sideMenu">#D6E4FF</color>
 
 </resources>

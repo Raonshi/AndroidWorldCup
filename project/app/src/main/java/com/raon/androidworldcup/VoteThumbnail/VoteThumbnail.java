@@ -1,11 +1,15 @@
 package com.raon.androidworldcup.VoteThumbnail;
 
+import com.raon.androidworldcup.Communication.voteDTO;
+
 public class VoteThumbnail {
     private String title, date;
+    private voteDTO dto;
 
-    public VoteThumbnail(String title, String date){
-        this.title = title;
-        this.date = date;
+    public VoteThumbnail(voteDTO dto){
+        this.title = dto.getVote_title();
+        this.date = dto.getVote_day();
+        this.dto = dto;
     }
 
     public String getDate() {
@@ -14,5 +18,9 @@ public class VoteThumbnail {
 
     public String getTitle() {
         return title;
+    }
+
+    public voteDTO getDto() {
+        return dto;
     }
 }

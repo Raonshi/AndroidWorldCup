@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.raon.androidworldcup.AppData;
 import com.raon.androidworldcup.Communication.voteDTO;
 import com.raon.androidworldcup.JoinVoteActivity;
 import com.raon.androidworldcup.LoginActivity;
@@ -30,7 +31,7 @@ public class VoteThumbnailAdapter extends BaseAdapter {
      * @param dto 썸네일 정보를 저장할 DTO 객체
      */
     public void addItem(voteDTO dto){
-        VoteThumbnail thumbnail = new VoteThumbnail(dto.getVote_title(), dto.getVote_day());
+        VoteThumbnail thumbnail = new VoteThumbnail(dto);
         thumbnails.add(thumbnail);
     }
 
@@ -71,6 +72,10 @@ public class VoteThumbnailAdapter extends BaseAdapter {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //선택한 투표의 dto를 가져와야함.
+                AppData.Singleton().selectedVoteDTO = thumbnails.get(position).getDto();
+
+                //선택한 투표 참가화면으로 이동
                 Intent intent = new Intent(context.getApplicationContext(), JoinVoteActivity.class);
                 context.startActivity(intent);
             }

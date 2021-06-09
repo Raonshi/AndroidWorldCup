@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,20 +31,27 @@ public class MainActivity extends AppCompatActivity {
     //위젯 선언
     ImageButton sideBtn;
     LinearLayout sideMenu, sideLogin, sideLogout, sideRegister, sideCreateVote, sideMyVote;
-    Button sideBtnLogin, sideBtnLogout, sideBtnRegister, sideBtnCreateVote, sideBtnMyVote;
+    Button sideBtnLogin, sideBtnLogout, sideBtnRegister, sideBtnCreateVote, sideBtnMyVote, themeBtn;
 
     //투표 리스트
     GridView voteGrid;
     ArrayList<voteDTO> voteList;
+
+    //테마 컬러
+    String themeColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
-
-
         InitWidget();
+
+
+        //앱 실행 시 테마값 불러옴
+        themeColor = ThemeUtil.modLoad(getApplicationContext());
+        ThemeUtil.applyTheme(themeColor);
+        themeBtn.setText("다크모드전환");
 
         Test();
         
@@ -125,6 +133,25 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //테마 변경 동작
+        themeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(themeColor.equals("light")){
+                    themeBtn.setText("라이트모드전환");
+                    themeColor = ThemeUtil.DARK_MODE;
+                }else if(themeColor.equals("dark")){
+                    themeBtn.setText("다크모드전환");
+                    themeColor = ThemeUtil.LIGHT_MODE;
+                }else{
+                    themeBtn.setText("라이트모드전환");
+                    themeColor = ThemeUtil.DARK_MODE;
+                }
+                ThemeUtil.applyTheme(themeColor);
+                ThemeUtil.modSave(getApplicationContext(), themeColor);
+            }
+        });
     }
 
 
@@ -133,9 +160,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         WidgetVisible();
-
-        //투표 목록 갱신
-        //adapter.notifyDataSetChanged();
     }
 
     /**
@@ -156,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         sideCreateVote = (LinearLayout)findViewById(R.id.sideCreateVote);
         sideMyVote = (LinearLayout)findViewById(R.id.sideMyVote);
         //voteList = (RecyclerView)findViewById(R.id.voteList);
+        themeBtn = (Button)findViewById(R.id.themeBtn);
 
         WidgetVisible();
     }
@@ -181,6 +206,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     void Test(){
+        /**
+         * 테스트용 투표DB연동 메서드
+         */
         voteList = new ArrayList<voteDTO>();
 
         CreateVoteDTO(30);
@@ -201,6 +229,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void CreateVoteDTO(int count){
+        /**
+         * 투표 DTO를 생성하는 메서드
+         */
         for(int i = 0; i < count; i++){
             voteDTO dto = new voteDTO();
             dto.setVote_title("testing"+(i+1));

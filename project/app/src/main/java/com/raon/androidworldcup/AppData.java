@@ -7,6 +7,8 @@
 
 package com.raon.androidworldcup;
 
+import com.raon.androidworldcup.Communication.voteDTO;
+
 public class AppData {
 
     //로그인 유무
@@ -15,12 +17,15 @@ public class AppData {
     //현재 로그인된 아이디
     public String id;
 
+    //선택한 투표DTO
+    public voteDTO selectedVoteDTO;
+
     //싱글톤
     private static AppData instance = null;
     public static AppData Singleton(){
         if(instance == null){
             instance = new AppData();
-            System.out.println("=====AppController Singleton instance has Created!!=====");
+            System.out.println("=====AppData Singleton instance has Created!!=====");
         }
         return instance;
     }
