@@ -1,19 +1,20 @@
 package com.raon.androidworldcup.ItemList;
 
+import android.widget.EditText;
+import android.widget.ImageButton;
+
 public class Item {
 
-    private int icon;
+    private ImageButton icon;
     private String text;
 
-    public void setIcon(int icon) {
+    public void setIcon(ImageButton icon) {
         this.icon = icon;
     }
 
-    public void setText(String text){
-        this.text = text;
-    }
+    public void setText(String text){ this.text = text; }
 
-    public int getIcon(){
+    public ImageButton getIcon(){
         return this.icon;
     }
 
