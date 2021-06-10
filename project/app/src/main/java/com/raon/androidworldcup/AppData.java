@@ -13,6 +13,8 @@ public class AppData {
 
     //로그인 유무
     public boolean isLogin = false;
+    //회원가입 성공
+    public boolean isRegister = false;
 
     //현재 로그인된 아이디
     public String id;

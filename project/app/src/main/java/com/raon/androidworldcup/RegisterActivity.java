@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -64,6 +65,12 @@ public class RegisterActivity extends AppCompatActivity {
                     Thread.sleep(500);
                 }catch (InterruptedException e){
                     System.out.println(e.getMessage());
+                }
+
+                //회원가입이 성공
+                if(AppData.Singleton().isRegister){
+                    Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
 
             }

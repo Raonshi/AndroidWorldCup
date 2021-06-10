@@ -51,7 +51,7 @@ public class LoginClient extends Thread{
                         break;
                     case "register":
                         userDTO = new userDTO(AppData.Singleton().id, AppData.Singleton().pw);
-                        AppData.Singleton().isLogin = userDTOCom(userDTO, "insert");
+                        AppData.Singleton().isRegister = userDTOCom(userDTO, "insert");
                         break;
                 }
 
