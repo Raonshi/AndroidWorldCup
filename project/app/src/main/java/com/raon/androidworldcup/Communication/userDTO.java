@@ -7,6 +7,11 @@ public class userDTO implements Serializable  {
 	String user_id;
 	String user_pwd;
 
+	public userDTO(String id){
+		user_id = id;
+		System.out.println("=======userDTO has CREATED=======");
+	}
+
 	public userDTO(String id, String pw){
 		user_id = id;
 		user_pwd = pw;

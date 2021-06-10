@@ -49,6 +49,23 @@ public class LoginClient extends Thread{
                         userDTO = new userDTO(AppData.Singleton().id, AppData.Singleton().pw);
                         AppData.Singleton().isLogin = userDTOCom(userDTO, "select");
                         break;
+                    case "idCheck":
+                        userDTO = new userDTO(AppData.Singleton().registerId);
+                        AppData.Singleton().isCheck = userDTOCom(userDTO, "select");
+
+                        if(AppData.Singleton().isCheck == true){
+                            for(int i = 0; i < userDTOList.size(); i++){
+                                if(AppData.Singleton().registerId.equals(userDTOList.get(i).getUser_id())){
+                                    AppData.Singleton().isCheck = false;
+                                    break;
+                                }
+                            }
+                        }
+                        else{
+                            System.out.println("SQL조회 실패");
+                        }
+
+                        break;
                     case "register":
                         userDTO = new userDTO(AppData.Singleton().id, AppData.Singleton().pw);
                         AppData.Singleton().isRegister = userDTOCom(userDTO, "insert");

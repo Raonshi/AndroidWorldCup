@@ -13,12 +13,17 @@ public class AppData {
 
     //로그인 유무
     public boolean isLogin = false;
+    //아이디체크
+    public boolean isCheck = false;
     //회원가입 성공
     public boolean isRegister = false;
 
     //현재 로그인된 아이디
     public String id;
     public String pw;
+
+    //회원가입
+    public String registerId = null;
 
     //선택한 투표DTO
     public voteDTO selectedVoteDTO;

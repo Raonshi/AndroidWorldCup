@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.raon.androidworldcup.Communication.LoginClient;
@@ -44,7 +45,32 @@ public class RegisterActivity extends AppCompatActivity {
         registerIdCheckBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AppData.Singleton().registerId = registerId.getText().toString();
 
+                client = new LoginClient("idCheck");
+                client.start();
+
+                //딜레이
+                try{
+                    Thread.sleep(500);
+                }catch (InterruptedException e){
+                    System.out.println(e.getMessage());
+                }
+
+                //아이디 중복 안될 경우
+                if(AppData.Singleton().isCheck){
+                    Toast.makeText(getApplicationContext(), "아이디 사용 가능", Toast.LENGTH_SHORT).show();
+                }
+                //중복될 경우
+                else{
+                    AlertDialog.Builder loginAlert = new AlertDialog.Builder(RegisterActivity.this);
+
+                    loginAlert.setTitle("로그인 알림");
+                    loginAlert.setMessage("아이디가 중복됩니다.\n아이디를 다시 입력해주세요.");
+                    //로그인 알림 확인 버튼 클릭 액션
+                    loginAlert.setPositiveButton("확인", null);
+                    loginAlert.show();
+                }
             }
         });
 
