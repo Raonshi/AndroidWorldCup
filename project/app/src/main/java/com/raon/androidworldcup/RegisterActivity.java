@@ -64,7 +64,6 @@ public class RegisterActivity extends AppCompatActivity {
                 //중복될 경우
                 else{
                     AlertDialog.Builder loginAlert = new AlertDialog.Builder(RegisterActivity.this);
-
                     loginAlert.setTitle("로그인 알림");
                     loginAlert.setMessage("아이디가 중복됩니다.\n아이디를 다시 입력해주세요.");
                     //로그인 알림 확인 버튼 클릭 액션
