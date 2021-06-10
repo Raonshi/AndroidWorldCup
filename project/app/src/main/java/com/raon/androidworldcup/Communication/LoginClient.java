@@ -30,7 +30,10 @@ public class LoginClient extends Thread{
     //서버가 보낸 메시지를 받는 객체
     Message inMessage = new Message();
 
-    public LoginClient(){
+    String str = null;
+
+    public LoginClient(String str){
+        this.str = str;
         System.out.println("=============Client Has Created!!!===============");
     }
 
@@ -41,9 +44,16 @@ public class LoginClient extends Thread{
                 out = new ObjectOutputStream(soc.getOutputStream()); //보내는 소켓
                 in = new ObjectInputStream((soc.getInputStream())); //받는 소켓
 
-                userDTO = new userDTO(AppData.Singleton().id, AppData.Singleton().pw);
-
-                AppData.Singleton().isLogin = userDTOCom(userDTO, "select");
+                switch(str){
+                    case "login":
+                        userDTO = new userDTO(AppData.Singleton().id, AppData.Singleton().pw);
+                        AppData.Singleton().isLogin = userDTOCom(userDTO, "select");
+                        break;
+                    case "register":
+                        userDTO = new userDTO(AppData.Singleton().id, AppData.Singleton().pw);
+                        AppData.Singleton().isLogin = userDTOCom(userDTO, "insert");
+                        break;
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();

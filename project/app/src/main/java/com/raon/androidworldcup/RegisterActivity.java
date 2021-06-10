@@ -9,10 +9,15 @@ import android.widget.ImageButton;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.raon.androidworldcup.Communication.LoginClient;
+
 public class RegisterActivity extends AppCompatActivity {
     EditText registerId, registerPw, registerPwRe;
     Button registerIdCheckBtn, registerBtn;
     ImageButton backBtn;
+
+    //통신 클라이언트 객체
+    private LoginClient client;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +52,19 @@ public class RegisterActivity extends AppCompatActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                AppData.Singleton().id = registerId.getText().toString();
+                AppData.Singleton().pw = registerPw.getText().toString();
+
+                client = new LoginClient("register");
+                client.start();
+
+                //딜레이
+                try{
+                    Thread.sleep(500);
+                }catch (InterruptedException e){
+                    System.out.println(e.getMessage());
+                }
 
             }
         });

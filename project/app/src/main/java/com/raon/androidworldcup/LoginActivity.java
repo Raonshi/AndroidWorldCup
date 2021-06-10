@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                 AppData.Singleton().id = idInput.getText().toString();
                 AppData.Singleton().pw = pwInput.getText().toString();
 
-                client = new LoginClient();
+                client = new LoginClient("login");
                 client.start();
 
                 //딜레이
