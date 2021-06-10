@@ -16,6 +16,7 @@ public class AppData {
 
     //현재 로그인된 아이디
     public String id;
+    public String pw;
 
     //선택한 투표DTO
     public voteDTO selectedVoteDTO;

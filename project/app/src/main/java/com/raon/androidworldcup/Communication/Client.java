@@ -7,9 +7,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Client {
+public class Client extends Thread {
 
-    String serverIP = "localhost";  //서버 IP
+    String serverIP = "172.29.70.245";  //서버 IP
     int serverPort = 8000;          //서버 port
 
     Socket soc;                     // 서버에 연결할 소켓
@@ -38,6 +38,23 @@ public class Client {
     Message inMessage = new Message();
 
 
+    @Override
+    public void run() {
+        super.run();
+
+        // 연결된 서버로부터 데이터를 받아올 준비를 한다
+        // 연결된 서버로 데이터를 보낼 준비를 함
+        try {
+            soc = new Socket(serverIP,serverPort);
+            out = new ObjectOutputStream(soc.getOutputStream()); //보내는 소켓
+            in = new ObjectInputStream((soc.getInputStream())); //받는 소켓
+            System.out.println("=======Client Has created!!!=======");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+/*
     public Client() {
         // 연결된 서버로부터 데이터를 받아올 준비를 한다
         // 연결된 서버로 데이터를 보낼 준비를 함
@@ -49,7 +66,11 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.out.println("=======Client Has created!!!=======");
     }
+
+ */
     public ArrayList<userDTO> getUserList(){return this.userDTOList;}
     public ArrayList<voteDTO> getVoteList(){return this.voteDTOList;}
 
@@ -61,6 +82,8 @@ public class Client {
             outMessage.setMessage("start");
 
             System.out.println("now, you can use translator!!");
+
+
 
             //첫 번째 통신
             out.writeObject(outMessage); //outMessage를 out객체를 통해 서버로 전송한다.

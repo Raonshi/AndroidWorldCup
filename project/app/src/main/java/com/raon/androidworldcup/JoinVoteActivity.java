@@ -43,6 +43,7 @@ public class JoinVoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //현재 투표의 dto
+                /*
                 voteDTO selected = AppData.Singleton().selectedVoteDTO;
                 selected.setVote_item1(selected.getVote_item1() + 1);
 
@@ -56,7 +57,7 @@ public class JoinVoteActivity extends AppCompatActivity {
 
                 //DB갱신 완료되면 AppData의 투표DTO삭제
                 AppData.Singleton().selectedVoteDTO = null;
-
+                */
                 Intent intent = new Intent(getApplicationContext(), ResultVoteActivity.class);
                 startActivity(intent);
             }
@@ -68,6 +69,7 @@ public class JoinVoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //현재 투표의 dto
+                /*
                 voteDTO selected = AppData.Singleton().selectedVoteDTO;
                 selected.setVote_item1(selected.getVote_item2() + 1);
 
@@ -81,7 +83,7 @@ public class JoinVoteActivity extends AppCompatActivity {
 
                 //DB갱신 완료되면 AppData의 투표DTO삭제
                 AppData.Singleton().selectedVoteDTO = null;
-
+*/
                 Intent intent = new Intent(getApplicationContext(), ResultVoteActivity.class);
                 startActivity(intent);
             }
@@ -93,6 +95,7 @@ public class JoinVoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //현재 투표의 dto
+                /*
                 voteDTO selected = AppData.Singleton().selectedVoteDTO;
                 selected.setVote_item1(selected.getVote_item3() + 1);
 
@@ -102,7 +105,7 @@ public class JoinVoteActivity extends AppCompatActivity {
 
                 //DB갱신 완료되면 AppData의 투표DTO삭제
                 AppData.Singleton().selectedVoteDTO = null;
-
+*/
                 Intent intent = new Intent(getApplicationContext(), ResultVoteActivity.class);
                 startActivity(intent);
             }

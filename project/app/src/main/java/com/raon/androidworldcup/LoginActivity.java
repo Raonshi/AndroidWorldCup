@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.raon.androidworldcup.Communication.Client;
+import com.raon.androidworldcup.Communication.LoginClient;
 import com.raon.androidworldcup.Communication.userDTO;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     Button loginBtn;
 
     //통신 클라이언트 객체
-    private Client client;
+    private LoginClient client;
 
 
     @Override
@@ -50,34 +51,28 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //테스트코드
-                AppData.Singleton().id ="test";
-                AppData.Singleton().isLogin = true;
-                finish();
-
-                 /*
                 ArrayList<userDTO> user;
+
                 boolean idCheck = true;
-                String id = idInput.getText().toString();
-                String pw = pwInput.getText().toString();
 
-                client = new Client();
+                AppData.Singleton().id = idInput.getText().toString();
+                AppData.Singleton().pw = pwInput.getText().toString();
 
-                //DB로 보낼 로그인 정보
-                userDTO userDTO = new userDTO();
-                userDTO.setUser_id(id);
-                userDTO.setUser_pwd(pw);
+                client = new LoginClient();
+                client.start();
 
-                AppData.Singleton().isLogin = client.userDTOCom(userDTO, "select");
+                //딜레이
+                try{
+                    Thread.sleep(500);
+                }catch (InterruptedException e){
+                    System.out.println(e.getMessage());
+                }
 
                 //로그인 성공
                 if(AppData.Singleton().isLogin){
                     user = client.getUserList();
-
                     for(int i = 0; i < user.size(); i++){
-                        if(id.equals(user.get(i).getUser_id()) && pw.equals(user.get(i).getUser_pwd())){
-                            AppData.Singleton().id = id;
+                        if(AppData.Singleton().id.equals(user.get(i).getUser_id()) && AppData.Singleton().pw.equals(user.get(i).getUser_pwd())){
                             Toast.makeText(getApplicationContext(), "로그인성공", Toast.LENGTH_SHORT).show();
                             finish();
                         }
@@ -94,14 +89,8 @@ public class LoginActivity extends AppCompatActivity {
                     loginAlert.show();
                 }
 
-                 */
+
             }
         });
-
-
-
-
-
-
     }
 }

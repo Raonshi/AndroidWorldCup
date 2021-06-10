@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="giveUpBtn" type="id" />
+    <item name="blueBtn" type="id" />
+    <item name="redBtn" type="id" />
+</resources>
