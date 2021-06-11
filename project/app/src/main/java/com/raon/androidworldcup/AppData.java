@@ -7,6 +7,8 @@
 
 package com.raon.androidworldcup;
 
+import android.content.Context;
+
 import com.raon.androidworldcup.Communication.voteDTO;
 
 public class AppData {

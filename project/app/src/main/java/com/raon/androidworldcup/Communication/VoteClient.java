@@ -53,24 +53,21 @@ public class VoteClient extends Thread {
             boolean isSuccess = false;
             
             switch(str){
-                //메인화면 그리드뷰
+                //메인 화면, 나의 투표 그리드뷰
                 case "main":
+                case "my":
                     voteDTO = new voteDTO();
                     System.out.println("MAINMAINMAIN");
                     AppData.Singleton().isMain = voteDTOCom(voteDTO, "select");
-
                 break;
-                //나의 투표 리스트를 받아온다.
-                case "my":
-
-                    break;
                 //투표 생성
                 case "create":
                     //투표 생성 쿼리 실행
                     AppData.Singleton().isCreate = voteDTOCom(AppData.Singleton().createVoteDTO, "insert");
                     break;
                 case "join":
-
+                    //투표 참가 쿼리 실행
+                    AppData.Singleton().isJoin = voteDTOCom(AppData.Singleton().selectedVoteDTO, "update");
                     break;
             }
 

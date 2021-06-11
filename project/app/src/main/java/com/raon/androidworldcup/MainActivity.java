@@ -13,6 +13,7 @@ package com.raon.androidworldcup;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -58,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
         themeBtn.setText("다크모드전환");
 
         //voteDTO를 통해 DB의 투표 값을 불러옴
-        //Test();
         GetVoteList();
         
-        
+
+        //사이드 버튼 호출
         sideBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,32 +216,6 @@ public class MainActivity extends AppCompatActivity {
         sideMenu.setVisibility(View.GONE);
     }
 
-
-    /**
-     * 테스트용 투표 리스트를 생성 후 화면에 출력한다.
-     */
-    void Test(){
-        /**
-         * 테스트용 투표DB연동 메서드
-         */
-        voteList = new ArrayList<voteDTO>();
-
-        CreateVoteDTO(30);
-
-        //ListAdapter adapter = new ArrayAdapter<voteDTO>(this, android.R.layout.simple_list_item_1, voteList);
-        adapter = new VoteThumbnailAdapter(this);
-        voteGrid.setAdapter(adapter);
-
-        //테스트 투표정보 입력
-        for(int i = 0; i < voteList.size(); i++){
-            //DTO리스트에서 DTO객체를 하나씩 호출
-            voteDTO dto = voteList.get(i);
-
-            adapter.addItem(dto);
-        }
-    }
-
-
     /**
      * 서버로부터 투표 결과를 받아온 뒤 화면에 출력한다.
      */
@@ -266,38 +241,18 @@ public class MainActivity extends AppCompatActivity {
             
             //어댑터를 그리드뷰에 연결
             VoteThumbnailAdapter adapter = new VoteThumbnailAdapter(this);
-            voteGrid = findViewById(R.id.mainVoteGrid);
             voteGrid.setAdapter(adapter);
             
             //결과를 어댑터에 저장
             for(int i = 0; i < voteList.size(); i++){
                 //DTO리스트에서 DTO객체를 하나씩 호출
                 voteDTO dto = voteList.get(i);
-                System.out.println("====================>>>>>>>>>>>>>>>>>>>>" + dto.getVote_title());
 
-                adapter.addItem(dto);
+                //투표의 id값과 현재 로그인된 id값이 다를 경우에만 메인메뉴에 출력
+                if(!dto.getUser_id().equals(AppData.Singleton().id)){
+                    adapter.addItem(dto);
+                }
             }
-        }
-    }
-
-
-    /**
-     * 테스트용 dto를 생성하는 메서드
-     * @param count 생성할 횟수
-     */
-    void CreateVoteDTO(int count){
-        for(int i = 0; i < count; i++){
-            String title = "testing"+(i+1);
-            String id = "tester" + (i+1);
-            String date = "2021-06-11";
-
-            voteDTO dto = new voteDTO(title, id, date);
-
-            dto.setVote_item1(20);
-            dto.setVote_item2(30);
-            dto.setVote_item3(10);
-
-            voteList.add(dto);
         }
     }
 }

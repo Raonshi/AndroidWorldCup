@@ -33,20 +33,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
 
-        //정적 UI객체 일괄선언
-        //StatelessWidgetInit();
-        idInput = findViewById(R.id.inputId);
-        pwInput = findViewById(R.id.inputPw);
+        InitView();
 
         //뒤로가기 버튼
-        backBtn = (ImageButton)findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { finish(); }
         });
 
         //임시 로그인 기능
-        loginBtn = (Button)findViewById(R.id.loginBtn);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,5 +86,13 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    void InitView(){
+        idInput = findViewById(R.id.inputId);
+        pwInput = findViewById(R.id.inputPw);
+        backBtn = (ImageButton)findViewById(R.id.backBtn);
+        loginBtn = (Button)findViewById(R.id.loginBtn);
     }
 }

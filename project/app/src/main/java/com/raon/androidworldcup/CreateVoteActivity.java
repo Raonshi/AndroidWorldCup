@@ -29,7 +29,7 @@ public class CreateVoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_vote);
         getSupportActionBar().hide();
 
-        InitWidget();
+        InitView();
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +89,7 @@ public class CreateVoteActivity extends AppCompatActivity {
     }
 
 
-    void InitWidget(){
+    void InitView(){
         backBtn = (ImageButton)findViewById(R.id.backBtn);
         inputVoteTitle = (EditText)findViewById(R.id.inputVoteTitle);
         datePicker = (DatePicker)findViewById(R.id.datePicker);

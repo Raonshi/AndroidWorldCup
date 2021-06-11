@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.raon.androidworldcup.Communication.Client;
@@ -22,9 +23,8 @@ public class JoinVoteActivity extends AppCompatActivity {
     TextView title;
 
 
-    //기타 객체
-    private Client client;
-
+    //투표 통신 클라이언트 객체
+    private VoteClient client;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,21 +32,21 @@ public class JoinVoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_join_vote);
         getSupportActionBar().hide();
 
-
+        InitView();
 
         //타이틀 제목 설정
-        title = findViewById(R.id.joinVoteTitle);
         title.setText(AppData.Singleton().selectedVoteDTO.getVote_title());
 
         //뒤로가기 버튼
-        backBtn = (ImageButton)findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { finish(); }
+            public void onClick(View v) {
+                AppData.Singleton().selectedVoteDTO = null;
+                finish();
+            }
         });
 
         //빨간버튼 선택
-        redBtn = findViewById(R.id.redBtn);
         redBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,94 +54,82 @@ public class JoinVoteActivity extends AppCompatActivity {
                 int num = AppData.Singleton().selectedVoteDTO.getVote_item1() + 1;
                 AppData.Singleton().selectedVoteDTO.setVote_item1(num);
 
-                //투표 실행
-                VoteClient client = new VoteClient("join");
-                client.start();
-
-                //딜레이
-                try{
-                    Thread.sleep(500);
-                }catch (InterruptedException e){
-                    System.out.println(e.getMessage());
-                }
-
-
-
-
-
-                //DB갱신 완료되면 AppData의 투표DTO삭제
-                AppData.Singleton().selectedVoteDTO = null;
-
-                Intent intent = new Intent(getApplicationContext(), ResultVoteActivity.class);
-                startActivity(intent);
+                Vote();
             }
         });
 
         //파란 버튼 선택
-        blueBtn = findViewById(R.id.blueBtn);
         blueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //현재 투표의 dto
-                /*
-                voteDTO selected = AppData.Singleton().selectedVoteDTO;
-                selected.setVote_item1(selected.getVote_item2() + 1);
+                //파란 버튼 카운트 1 증가
+                int num = AppData.Singleton().selectedVoteDTO.getVote_item2() + 1;
+                AppData.Singleton().selectedVoteDTO.setVote_item2(num);
 
-                Client client = new Client();
-                client.voteDTOCom(selected, "update");
-
-
-
-
-                
-
-                //DB갱신 완료되면 AppData의 투표DTO삭제
-                AppData.Singleton().selectedVoteDTO = null;
-*/
-                Intent intent = new Intent(getApplicationContext(), ResultVoteActivity.class);
-                startActivity(intent);
+                Vote();
             }
         });
 
         //기권 버튼 선택
-        giveUpBtn = findViewById(R.id.giveUpBtn);
         giveUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //현재 투표의 dto
-                /*
-                voteDTO selected = AppData.Singleton().selectedVoteDTO;
-                selected.setVote_item1(selected.getVote_item3() + 1);
+                //기권표 카운트 1 증가
+                int num = AppData.Singleton().selectedVoteDTO.getVote_item3() + 1;
+                AppData.Singleton().selectedVoteDTO.setVote_item3(num);
 
-                Client client = new Client();
-                client.voteDTOCom(selected, "update");
-
-
-                //DB갱신 완료되면 AppData의 투표DTO삭제
-                AppData.Singleton().selectedVoteDTO = null;
-*/
-                Intent intent = new Intent(getApplicationContext(), ResultVoteActivity.class);
-                startActivity(intent);
+                Vote();
             }
         });
+
+
+        //만약 현재 투표가 내가만든 투표라면 투표 불가 알림 출력
+        if(AppData.Singleton().selectedVoteDTO.getUser_id().equals(AppData.Singleton().id)){
+            AlertDialog.Builder loginAlert = new AlertDialog.Builder(JoinVoteActivity.this);
+
+            loginAlert.setTitle("투표 알림");
+            loginAlert.setMessage("본인이 만든 투표는 참가할 수 없습니다!");
+            loginAlert.setPositiveButton("확인", null);
+            loginAlert.show();
+        }
     }
 
 
+    void InitView(){
+        title = findViewById(R.id.joinVoteTitle);
+        backBtn = (ImageButton)findViewById(R.id.backBtn);
+        redBtn = findViewById(R.id.redBtn);
+        blueBtn = findViewById(R.id.blueBtn);
+        giveUpBtn = findViewById(R.id.giveUpBtn);
+    }
 
 
+    /**
+     * 투표 실행 메서드
+     */
+    private void Vote(){
+        //투표 실행
+        VoteClient client = new VoteClient("join");
+        client.start();
 
-    private void Vote(int rId){
+        //딜레이
+        try{
+            Thread.sleep(500);
+        }catch (InterruptedException e){
+            System.out.println(e.getMessage());
+        }
 
-        switch(rId){
-            case R.id.redBtn:
+        if(AppData.Singleton().isJoin == true){
+            Intent intent = new Intent(getApplicationContext(), ResultVoteActivity.class);
+            startActivity(intent);
+        }
+        else{
+            AlertDialog.Builder loginAlert = new AlertDialog.Builder(JoinVoteActivity.this);
 
-                break;
-            case R.id.blueBtn:
-
-                break;
-            case R.id.giveUpBtn:
-
-                break;
+            loginAlert.setTitle("투표 알림");
+            loginAlert.setMessage("투표 실패!\n관리자에게 연락주세요.");
+            loginAlert.setPositiveButton("확인", null);
+            loginAlert.show();
         }
 
     }

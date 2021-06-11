@@ -9,10 +9,14 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.raon.androidworldcup.AppData;
 import com.raon.androidworldcup.Communication.voteDTO;
 import com.raon.androidworldcup.JoinVoteActivity;
 import com.raon.androidworldcup.LoginActivity;
+import com.raon.androidworldcup.MainActivity;
+import com.raon.androidworldcup.MyVoteActivity;
 import com.raon.androidworldcup.R;
 
 import java.util.ArrayList;

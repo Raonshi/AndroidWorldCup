@@ -28,16 +28,17 @@ public class ResultVoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result_vote);
         getSupportActionBar().hide();
 
+        InitView();
+
+        VoteRate();
 
         //뒤로가기 버튼
-        backBtn = (ImageButton)findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { finish(); }
         });
 
-
-        homeBtn = findViewById(R.id.homeBtn);
+        //메인메뉴 돌아가기
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,5 +47,45 @@ public class ResultVoteActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+
+    void InitView(){
+        redRate = findViewById(R.id.redRate);
+        redRateText = findViewById(R.id.redRateText);
+
+        blueRate = findViewById(R.id.blueRate);
+        blueRateText = findViewById(R.id.blueRateText);
+
+        giveUpRate = findViewById(R.id.giveUpRate);
+        giveUpRateText = findViewById(R.id.giveUpRateText);
+
+        backBtn = (ImageButton)findViewById(R.id.backBtn);
+        homeBtn = findViewById(R.id.homeBtn);
+    }
+
+    /**
+     * 투표율 계산
+     */
+    void VoteRate(){
+        //전체 투표 수
+        int m = AppData.Singleton().selectedVoteDTO.getVote_item1() +
+                AppData.Singleton().selectedVoteDTO.getVote_item2() +
+                AppData.Singleton().selectedVoteDTO.getVote_item3();
+
+        //각 투표별 득표율
+        int red = AppData.Singleton().selectedVoteDTO.getVote_item1() / m;
+        int blue = AppData.Singleton().selectedVoteDTO.getVote_item2() / m;
+        int giveUp = AppData.Singleton().selectedVoteDTO.getVote_item3() / m;
+
+        //그래프그리기
+        redRate.setProgress(red);
+        blueRate.setProgress(blue);
+        giveUpRate.setProgress(giveUp);
+
+        //텍스트
+        redRateText.setText(Integer.toString(red));
+        blueRateText.setText(Integer.toString(blue));
+        giveUpRateText.setText(Integer.toString(giveUp));
     }
 }
