@@ -45,18 +45,22 @@ public class MyVoteActivity extends AppCompatActivity {
 
     }
 
-    void CreateTestVote(){
-        //myVoteList에 캐싱
-        for(int i = 0; i < 10; i++){
-            voteDTO dto = new voteDTO();
-            dto.setVote_title("testVote" + (i+1));
-            dto.setUser_id("test" + (i+1));
-            dto.setVote_day("2021-06-10");
-            dto.setVote_item1(10);
-            dto.setVote_item2(20);
-            dto.setVote_item3(15);
+    void CreateVoteDTO(int count){
+        /**
+         * 투표 DTO를 생성하는 메서드
+         */
+        for(int i = 0; i < count; i++){
+            String title = "testing"+(i+1);
+            String id = "tester" + (i+1);
+            String date = "2021-06-11";
 
-            myDTOList.add(i, dto);
+            voteDTO dto = new voteDTO(title, id, date);
+
+            dto.setVote_item1(20);
+            dto.setVote_item2(30);
+            dto.setVote_item3(10);
+
+            myDTOList.add(dto);
         }
     }
 

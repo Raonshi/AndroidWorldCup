@@ -11,8 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.raon.androidworldcup.Communication.Client;
-import com.raon.androidworldcup.Communication.LoginClient;
+import com.raon.androidworldcup.Communication.UserClient;
 import com.raon.androidworldcup.Communication.userDTO;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     Button loginBtn;
 
     //통신 클라이언트 객체
-    private LoginClient client;
+    private UserClient client;
 
 
     @Override
@@ -58,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                 AppData.Singleton().id = idInput.getText().toString();
                 AppData.Singleton().pw = pwInput.getText().toString();
 
-                client = new LoginClient("login");
+                client = new UserClient("login");
                 client.start();
 
                 //딜레이

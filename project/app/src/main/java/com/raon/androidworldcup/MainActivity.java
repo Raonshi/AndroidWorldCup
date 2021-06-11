@@ -21,6 +21,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.raon.androidworldcup.Communication.VoteClient;
 import com.raon.androidworldcup.Communication.voteDTO;
 import com.raon.androidworldcup.VoteThumbnail.VoteThumbnailAdapter;
 
@@ -52,7 +53,10 @@ public class MainActivity extends AppCompatActivity {
         ThemeUtil.applyTheme(themeColor);
         themeBtn.setText("다크모드전환");
 
-        Test();
+        //voteDTO를 통해 DB의 투표 값을 불러옴
+        //Test();
+        GetVoteList();
+        
         
         sideBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
         sideRegister = (LinearLayout)findViewById(R.id.sideRegister);
         sideCreateVote = (LinearLayout)findViewById(R.id.sideCreateVote);
         sideMyVote = (LinearLayout)findViewById(R.id.sideMyVote);
-        //voteList = (RecyclerView)findViewById(R.id.voteList);
         themeBtn = (Button)findViewById(R.id.themeBtn);
 
         WidgetVisible();
@@ -200,6 +203,9 @@ public class MainActivity extends AppCompatActivity {
             sideCreateVote.setVisibility(View.VISIBLE);
             sideMyVote.setVisibility(View.GONE);
         }
+
+        //초기상태에는 사이드 메뉴 없어야함
+        sideMenu.setVisibility(View.GONE);
     }
 
 
@@ -227,15 +233,43 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    void GetVoteList(){
+        //투표 목록 결과를 저장할 리스트
+        voteList = new ArrayList<voteDTO>();
+
+        //투표 목록 가지고오기
+        VoteClient client = new VoteClient("main");
+        client.start();
+
+        //결과 값 저장
+        voteList = client.getVoteList();
+
+        //어댑터를 그리드뷰에 연결
+        VoteThumbnailAdapter adapter = new VoteThumbnailAdapter(this);
+        voteGrid = findViewById(R.id.mainVoteGrid);
+        voteGrid.setAdapter(adapter);
+        
+        //결과를 어댑터에 저장
+        for(int i = 0; i < voteList.size(); i++){
+            //DTO리스트에서 DTO객체를 하나씩 호출
+            voteDTO dto = voteList.get(i);
+            adapter.addItem(dto);
+        }
+    }
+
+
     void CreateVoteDTO(int count){
         /**
          * 투표 DTO를 생성하는 메서드
          */
         for(int i = 0; i < count; i++){
-            voteDTO dto = new voteDTO();
-            dto.setVote_title("testing"+(i+1));
-            dto.setUser_id("tester" + (i+1));
-            dto.setVote_day("2021-06-11");
+            String title = "testing"+(i+1);
+            String id = "tester" + (i+1);
+            String date = "2021-06-11";
+
+            voteDTO dto = new voteDTO(title, id, date);
+
             dto.setVote_item1(20);
             dto.setVote_item2(30);
             dto.setVote_item3(10);

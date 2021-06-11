@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.raon.androidworldcup.Communication.LoginClient;
+import com.raon.androidworldcup.Communication.UserClient;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText registerId, registerPw, registerPwRe;
@@ -19,7 +19,7 @@ public class RegisterActivity extends AppCompatActivity {
     ImageButton backBtn;
 
     //통신 클라이언트 객체
-    private LoginClient client;
+    private UserClient client;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AppData.Singleton().registerId = registerId.getText().toString();
 
-                client = new LoginClient("idCheck");
+                client = new UserClient("idCheck");
                 client.start();
 
                 //딜레이
@@ -78,11 +78,15 @@ public class RegisterActivity extends AppCompatActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(AppData.Singleton().isCheck == false){
+                    Toast.makeText(getApplicationContext(), "아이디 체크를 진행해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                
                 AppData.Singleton().id = registerId.getText().toString();
                 AppData.Singleton().pw = registerPw.getText().toString();
 
-                client = new LoginClient("register");
+                client = new UserClient("register");
                 client.start();
 
                 //딜레이

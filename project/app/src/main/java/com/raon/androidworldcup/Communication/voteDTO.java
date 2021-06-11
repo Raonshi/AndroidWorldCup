@@ -10,6 +10,29 @@ public class voteDTO implements Serializable  {
 	int vote_item2;
 	int vote_item3;
 	String vote_day;
+
+	public voteDTO(){
+		System.out.println("=======voteDTO has CREATED=======");
+	}
+
+	public voteDTO(String vote_title, String user_id, String vote_day){
+		this.vote_title = vote_title;
+		this.user_id = user_id;
+		this.vote_day = vote_day;
+		System.out.println("=======voteDTO has CREATED=======");
+	}
+
+	public voteDTO(String vote_title, String user_id, String vote_day, int vote_item1, int vote_item2, int vote_item3){
+		this.vote_title = vote_title;
+		this.user_id = user_id;
+		this.vote_day = vote_day;
+		this.vote_item1 = vote_item1;
+		this.vote_item2 = vote_item2;
+		this.vote_item3 = vote_item3;
+		System.out.println("=======voteDTO has CREATED=======");
+	}
+
+
 	public String getVote_title() {
 		return vote_title;
 	}

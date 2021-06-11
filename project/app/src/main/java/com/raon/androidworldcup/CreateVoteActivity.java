@@ -9,9 +9,11 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.raon.androidworldcup.Communication.Client;
+import com.raon.androidworldcup.Communication.VoteClient;
 import com.raon.androidworldcup.Communication.voteDTO;
 
 public class CreateVoteActivity extends AppCompatActivity {
@@ -49,21 +51,33 @@ public class CreateVoteActivity extends AppCompatActivity {
                 //아이디 가져오기
                 String id = AppData.Singleton().id;
 
-                //DTO 객체 생성
-                voteDTO dto = new voteDTO();
-                dto.setVote_title(title);
-                dto.setVote_day(date);
-                dto.setUser_id(id);
+                //생성할 투표의 DTO를 AppData에 저장
+                AppData.Singleton().createVoteDTO = new voteDTO(title, id, date, 0, 0, 0);
 
-                boolean isSuccess = new Client().voteDTOCom(dto, "insert");;
+                //서버로 Request
+                VoteClient client = new VoteClient("create");
+                client.start();
 
-                if(isSuccess){
-                    Toast.makeText(getApplicationContext(), "투표만들기 성공", Toast.LENGTH_SHORT).show();
+                //딜레이
+                try{
+                    Thread.sleep(500);
+                }catch (InterruptedException e){
+                    System.out.println(e.getMessage());
+                }
+
+                //결과 출력
+                //투표 생성이 성공한 경우
+                if(AppData.Singleton().isCreate){
+                    Toast.makeText(getApplicationContext(), "투표 생성 성공", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "투표만들기 실패", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder loginAlert = new AlertDialog.Builder(CreateVoteActivity.this);
+                    loginAlert.setTitle("투표 생성 알림");
+                    loginAlert.setMessage("오류 발생!\n개발자에게 연락해주세요.");
+                    //로그인 알림 확인 버튼 클릭 액션
+                    loginAlert.setPositiveButton("확인", null);
+                    loginAlert.show();
                 }
-                finish();
             }
         });
     }

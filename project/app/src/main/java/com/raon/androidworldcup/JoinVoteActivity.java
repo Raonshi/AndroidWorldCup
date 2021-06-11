@@ -6,17 +6,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.raon.androidworldcup.Communication.Client;
+import com.raon.androidworldcup.Communication.VoteClient;
 import com.raon.androidworldcup.Communication.voteDTO;
 
 public class JoinVoteActivity extends AppCompatActivity {
     //UI 객체들
     ImageButton backBtn;
     Button redBtn, blueBtn, giveUpBtn;
+    TextView title;
 
 
     //기타 객체
@@ -30,6 +33,11 @@ public class JoinVoteActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
 
+
+        //타이틀 제목 설정
+        title = findViewById(R.id.joinVoteTitle);
+        title.setText(AppData.Singleton().selectedVoteDTO.getVote_title());
+
         //뒤로가기 버튼
         backBtn = (ImageButton)findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -42,14 +50,20 @@ public class JoinVoteActivity extends AppCompatActivity {
         redBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //현재 투표의 dto
-                /*
-                voteDTO selected = AppData.Singleton().selectedVoteDTO;
-                selected.setVote_item1(selected.getVote_item1() + 1);
+                //빨간 버튼 클릭 수 1 증가
+                int num = AppData.Singleton().selectedVoteDTO.getVote_item1() + 1;
+                AppData.Singleton().selectedVoteDTO.setVote_item1(num);
 
-                Client client = new Client();
-                client.voteDTOCom(selected, "update");
+                //투표 실행
+                VoteClient client = new VoteClient("join");
+                client.start();
 
+                //딜레이
+                try{
+                    Thread.sleep(500);
+                }catch (InterruptedException e){
+                    System.out.println(e.getMessage());
+                }
 
 
 
@@ -57,7 +71,7 @@ public class JoinVoteActivity extends AppCompatActivity {
 
                 //DB갱신 완료되면 AppData의 투표DTO삭제
                 AppData.Singleton().selectedVoteDTO = null;
-                */
+
                 Intent intent = new Intent(getApplicationContext(), ResultVoteActivity.class);
                 startActivity(intent);
             }

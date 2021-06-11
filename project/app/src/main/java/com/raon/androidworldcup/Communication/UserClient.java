@@ -9,8 +9,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class LoginClient extends Thread{
-    String serverIP = "172.29.70.245";  //서버 IP
+public class UserClient extends Thread{
+    String serverIP = "112.186.171.198";  //서버 IP
     int serverPort = 8000;          //서버 port
 
     Socket soc;                     // 서버에 연결할 소켓
@@ -32,7 +32,7 @@ public class LoginClient extends Thread{
 
     String str = null;
 
-    public LoginClient(String str){
+    public UserClient(String str){
         this.str = str;
         System.out.println("=============Client Has Created!!!===============");
     }

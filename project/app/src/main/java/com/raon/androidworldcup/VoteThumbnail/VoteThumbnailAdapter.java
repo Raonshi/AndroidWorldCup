@@ -73,7 +73,7 @@ public class VoteThumbnailAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 //선택한 투표의 dto를 가져와야함.
-                AppData.Singleton().selectedVoteDTO = thumbnails.get(position).getDto();
+                AppData.Singleton().selectedVoteDTO = thumbnails.get(position).getDTO();
 
                 //선택한 투표 참가화면으로 이동
                 Intent intent = new Intent(context.getApplicationContext(), JoinVoteActivity.class);

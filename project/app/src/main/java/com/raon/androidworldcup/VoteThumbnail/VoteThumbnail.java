@@ -6,6 +6,7 @@ public class VoteThumbnail {
     private String title, date;
     private voteDTO dto;
 
+    //voteDTO에 담긴 정보 저장
     public VoteThumbnail(voteDTO dto){
         this.title = dto.getVote_title();
         this.date = dto.getVote_day();
@@ -20,7 +21,7 @@ public class VoteThumbnail {
         return title;
     }
 
-    public voteDTO getDto() {
+    public voteDTO getDTO() {
         return dto;
     }
 }
