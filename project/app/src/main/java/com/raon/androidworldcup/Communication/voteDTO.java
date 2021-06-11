@@ -1,5 +1,7 @@
 package com.raon.androidworldcup.Communication;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 
 public class voteDTO implements Serializable  {
@@ -22,7 +24,7 @@ public class voteDTO implements Serializable  {
 		System.out.println("=======voteDTO has CREATED=======");
 	}
 
-	public voteDTO(String vote_title, String user_id, String vote_day, int vote_item1, int vote_item2, int vote_item3){
+	public voteDTO(String vote_title, String user_id, int vote_item1, int vote_item2, int vote_item3, String vote_day){
 		this.vote_title = vote_title;
 		this.user_id = user_id;
 		this.vote_day = vote_day;

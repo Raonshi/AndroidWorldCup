@@ -40,13 +40,17 @@ public class MainActivity extends AppCompatActivity {
     //테마 컬러
     String themeColor;
 
+    //리스트 어댑터
+    VoteThumbnailAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
-        InitWidget();
+        AppData.Singleton().Init();
 
+        InitWidget();
 
         //앱 실행 시 테마값 불러옴
         themeColor = ThemeUtil.modLoad(getApplicationContext());
@@ -161,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         WidgetVisible();
     }
 
@@ -183,10 +186,14 @@ public class MainActivity extends AppCompatActivity {
         sideCreateVote = (LinearLayout)findViewById(R.id.sideCreateVote);
         sideMyVote = (LinearLayout)findViewById(R.id.sideMyVote);
         themeBtn = (Button)findViewById(R.id.themeBtn);
+        voteGrid = findViewById(R.id.mainVoteGrid);
 
         WidgetVisible();
     }
 
+    /**
+     * 사이드 메뉴 위젯 버튼의 Visible을 설정
+     */
     void WidgetVisible(){
         //위젯 visible 설정
         if(AppData.Singleton().isLogin){
@@ -209,7 +216,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * 테스트용 투표 리스트를 생성 후 화면에 출력한다.
+     */
     void Test(){
         /**
          * 테스트용 투표DB연동 메서드
@@ -219,8 +228,7 @@ public class MainActivity extends AppCompatActivity {
         CreateVoteDTO(30);
 
         //ListAdapter adapter = new ArrayAdapter<voteDTO>(this, android.R.layout.simple_list_item_1, voteList);
-        VoteThumbnailAdapter adapter = new VoteThumbnailAdapter(this);
-        voteGrid = findViewById(R.id.mainVoteGrid);
+        adapter = new VoteThumbnailAdapter(this);
         voteGrid.setAdapter(adapter);
 
         //테스트 투표정보 입력
@@ -229,11 +237,13 @@ public class MainActivity extends AppCompatActivity {
             voteDTO dto = voteList.get(i);
 
             adapter.addItem(dto);
-
         }
     }
 
 
+    /**
+     * 서버로부터 투표 결과를 받아온 뒤 화면에 출력한다.
+     */
     void GetVoteList(){
         //투표 목록 결과를 저장할 리스트
         voteList = new ArrayList<voteDTO>();
@@ -242,27 +252,40 @@ public class MainActivity extends AppCompatActivity {
         VoteClient client = new VoteClient("main");
         client.start();
 
-        //결과 값 저장
-        voteList = client.getVoteList();
+        //딜레이
+        try{
+            Thread.sleep(500);
+        }catch (InterruptedException e){
+            System.out.println(e.getMessage());
+        }
 
-        //어댑터를 그리드뷰에 연결
-        VoteThumbnailAdapter adapter = new VoteThumbnailAdapter(this);
-        voteGrid = findViewById(R.id.mainVoteGrid);
-        voteGrid.setAdapter(adapter);
-        
-        //결과를 어댑터에 저장
-        for(int i = 0; i < voteList.size(); i++){
-            //DTO리스트에서 DTO객체를 하나씩 호출
-            voteDTO dto = voteList.get(i);
-            adapter.addItem(dto);
+        //결과 값 저장
+        if(AppData.Singleton().isMain){
+            voteList = client.getVoteList();
+            System.out.println("리스트 받아왔다.");
+            
+            //어댑터를 그리드뷰에 연결
+            VoteThumbnailAdapter adapter = new VoteThumbnailAdapter(this);
+            voteGrid = findViewById(R.id.mainVoteGrid);
+            voteGrid.setAdapter(adapter);
+            
+            //결과를 어댑터에 저장
+            for(int i = 0; i < voteList.size(); i++){
+                //DTO리스트에서 DTO객체를 하나씩 호출
+                voteDTO dto = voteList.get(i);
+                System.out.println("====================>>>>>>>>>>>>>>>>>>>>" + dto.getVote_title());
+
+                adapter.addItem(dto);
+            }
         }
     }
 
 
+    /**
+     * 테스트용 dto를 생성하는 메서드
+     * @param count 생성할 횟수
+     */
     void CreateVoteDTO(int count){
-        /**
-         * 투표 DTO를 생성하는 메서드
-         */
         for(int i = 0; i < count; i++){
             String title = "testing"+(i+1);
             String id = "tester" + (i+1);

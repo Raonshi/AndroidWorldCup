@@ -26,10 +26,7 @@ public class MyVoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_vote);
         getSupportActionBar().hide();
 
-
-        TestVote();
-
-
+        //TestVote();
 
         backBtn = (ImageButton)findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -38,10 +35,6 @@ public class MyVoteActivity extends AppCompatActivity {
         });
 
 
-
-    }
-
-    void TestVote(){
 
     }
 

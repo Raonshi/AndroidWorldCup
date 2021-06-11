@@ -10,6 +10,10 @@ package com.raon.androidworldcup;
 import com.raon.androidworldcup.Communication.voteDTO;
 
 public class AppData {
+    //서버 정보
+    public String serverIP = "172.29.83.105";
+    public int serverPort = 8000;
+
 
     //로그인 유무
     public boolean isLogin = false;
@@ -24,12 +28,12 @@ public class AppData {
     public String registerId = null;
 
 
-
-
     //선택한 투표DTO
     public voteDTO selectedVoteDTO;
     //생성할 투표DTO
     public voteDTO createVoteDTO;
+    //메인화면 투표 출력
+    public boolean isMain = false;
     //투표 생성 성공 여부
     public boolean isCreate = false;
     //투표 참가 성공 여부
@@ -43,5 +47,10 @@ public class AppData {
             System.out.println("=====AppData Singleton instance has Created!!=====");
         }
         return instance;
+    }
+
+
+    public void Init(){
+        System.out.println("==================AppDataSingleton has Created=================");
     }
 }

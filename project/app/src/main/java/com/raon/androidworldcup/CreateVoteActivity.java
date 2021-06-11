@@ -52,7 +52,8 @@ public class CreateVoteActivity extends AppCompatActivity {
                 String id = AppData.Singleton().id;
 
                 //생성할 투표의 DTO를 AppData에 저장
-                AppData.Singleton().createVoteDTO = new voteDTO(title, id, date, 0, 0, 0);
+                //int recognize = 1;
+                AppData.Singleton().createVoteDTO = new voteDTO(title, id, 0, 0, 0, date);
 
                 //서버로 Request
                 VoteClient client = new VoteClient("create");

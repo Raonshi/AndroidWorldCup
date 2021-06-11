@@ -9,10 +9,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class VoteClient extends Thread {
-
+/*
     String serverIP = "112.186.171.198";  //서버 IP
     int serverPort = 8000;          //서버 port
-
+*/
     Socket soc;                     // 서버에 연결할 소켓
 
     ObjectOutputStream out;         //데이터 송신 객체
@@ -46,7 +46,7 @@ public class VoteClient extends Thread {
         // 연결된 서버로부터 데이터를 받아올 준비를 한다
         // 연결된 서버로 데이터를 보낼 준비를 함
         try {
-            soc = new Socket(serverIP,serverPort);
+            soc = new Socket(AppData.Singleton().serverIP,AppData.Singleton().serverPort);
             out = new ObjectOutputStream(soc.getOutputStream()); //보내는 소켓
             in = new ObjectInputStream((soc.getInputStream())); //받는 소켓
 
@@ -56,10 +56,11 @@ public class VoteClient extends Thread {
                 //메인화면 그리드뷰
                 case "main":
                     voteDTO = new voteDTO();
-                    isSuccess = voteDTOCom(voteDTO, "select");
-                    
+                    System.out.println("MAINMAINMAIN");
+                    AppData.Singleton().isMain = voteDTOCom(voteDTO, "select");
+
                 break;
-                //
+                //나의 투표 리스트를 받아온다.
                 case "my":
 
                     break;
@@ -72,9 +73,6 @@ public class VoteClient extends Thread {
 
                     break;
             }
-
-
-            System.out.println("=======Client Has created!!!=======");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -99,6 +97,7 @@ public class VoteClient extends Thread {
             while(true){
                 inMessage= (Message)in.readObject();
                 System.out.println("통신:"+inMessage.getMessage());
+
                 switch(inMessage.getMessage()) {
                     case "first": //어떤 객체인지 알려줌
                         outMessage.setMessage("voteDTO");

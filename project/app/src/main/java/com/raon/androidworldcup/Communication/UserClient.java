@@ -10,9 +10,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class UserClient extends Thread{
+    /*
     String serverIP = "112.186.171.198";  //서버 IP
     int serverPort = 8000;          //서버 port
-
+*/
     Socket soc;                     // 서버에 연결할 소켓
 
     ObjectOutputStream out;         //데이터 송신 객체
@@ -40,7 +41,7 @@ public class UserClient extends Thread{
     @Override
     public void run() {
             try {
-                soc = new Socket(serverIP,serverPort);
+                soc = new Socket(AppData.Singleton().serverIP,AppData.Singleton().serverPort);
                 out = new ObjectOutputStream(soc.getOutputStream()); //보내는 소켓
                 in = new ObjectInputStream((soc.getInputStream())); //받는 소켓
 

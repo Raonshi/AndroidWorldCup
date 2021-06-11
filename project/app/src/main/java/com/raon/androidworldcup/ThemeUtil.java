@@ -11,6 +11,10 @@ public class ThemeUtil {
     public static final String DARK_MODE = "dark";
     public static final String DEFAULT_MODE = "default";
 
+    /**
+     * 테마 설정
+     * @param themeColor 적용할 테마 색상
+     */
     public static void applyTheme(String themeColor){
         switch(themeColor){
             case LIGHT_MODE:
@@ -32,6 +36,9 @@ public class ThemeUtil {
         }
     }
 
+    /**
+     * 적용한 테마를 저장한다.
+     */
     public static void modSave(Context context, String select_mod){
         SharedPreferences sp;
         sp = context.getSharedPreferences("mod", context.MODE_PRIVATE);
@@ -41,6 +48,11 @@ public class ThemeUtil {
         editor.commit();
     }
 
+    /**
+     * 적용한 테마를 불러온다.
+     * @param context 테마가 적용된 액티비티
+     * @return 적용된 테마값의 String값을 return
+     */
     public static String modLoad(Context context){
         SharedPreferences sp;
         sp = context.getSharedPreferences("mod", context.MODE_PRIVATE);
