@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.raon.androidworldcup">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AndroidWorldCup">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".LoginActivity" android:label="로그인 액티비티"/>
+        <activity android:name=".RegisterActivity" android:label="회원가입 액티비티"/>
+        <activity android:name=".CreateVoteActivity" android:label="투표생성 액티비티"/>
+        <activity android:name=".MyVoteActivity" android:label="나의 투표 액티비티"/>
+        <activity android:name=".JoinVoteActivity" android:label="투표 참여 액티비티"/>
+        <activity android:name=".ResultVoteActivity" android:label="투표 결과 액티비티"/>
+
+    </application>
+
+</manifest>
