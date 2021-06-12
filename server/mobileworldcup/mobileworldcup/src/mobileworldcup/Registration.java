@@ -90,7 +90,7 @@ public class Registration extends JFrame {
                    client= new Client();
                    userDTO userDTO= new userDTO();
                    userDTO.setUser_id(Id_text.getText());
-                   userDTO.setUser_pwd(Pwd_text.getText());
+                   
                    
                    
                    boolean isSuccessful=client.userDTOCom(userDTO, "select");

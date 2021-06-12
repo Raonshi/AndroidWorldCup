@@ -196,8 +196,30 @@ public class TransLator extends Thread {
                 		voteDTO=(voteDTO)in.readObject(); //객체 저장
                 		
                 		switch(action) {
+							case "update":
+								isSuccess=voteDAO.modify(voteDTO.getVote_title(),voteDTO.getVote_item1(), voteDTO.getVote_item2(), voteDTO.getVote_item3());
+								System.out.println(isSuccess);
+								outMessage.setMessage("sixth");
+								out.writeObject(outMessage);
+								out.flush();
+								out.reset();
+
+								inMessage = (Message)in.readObject(); //역직렬화
+								if(isSuccess==-1) {
+									outMessage.setMessage("실패");
+									out.writeObject(outMessage);
+									out.flush();
+									out.reset();
+								}
+								else{
+									outMessage.setMessage("성공");
+									out.writeObject(outMessage);
+									out.flush();
+									out.reset();
+								}
+								break;
             				case "insert":
-            					isSuccess=voteDAO.join(voteDTO.getVote_title(), voteDTO.getUser_id(), voteDTO.getVote_day());
+            					isSuccess=voteDAO.join(voteDTO.getVote_title(), voteDTO.getUser_id(),voteDTO.getVote_item1(), voteDTO.getVote_item2(), voteDTO.getVote_item3(), voteDTO.getVote_day());
             					System.out.println(isSuccess);
             					outMessage.setMessage("sixth");
             					out.writeObject(outMessage);
@@ -217,7 +239,32 @@ public class TransLator extends Thread {
             						out.flush();
             						out.reset();
             					}
-            				break;
+            					break;
+            				case "select":
+                				outMessage.setMessage("fourth");
+                				out.writeObject(outMessage);
+                				out.flush();
+                				out.reset();
+                				
+                				voteDTOList=voteDAO.list();
+                				out.writeObject(voteDTOList);
+                				out.flush();
+                				out.reset();
+                				inMessage = (Message)in.readObject(); //역직렬화
+                				System.out.println(inMessage);
+                				
+                				if(voteDTOList.size()>0) {
+                					outMessage.setMessage("성공");
+                					out.writeObject(outMessage);
+                					out.flush();
+                					out.reset();
+                				}else{
+                					outMessage.setMessage("실패");
+                					out.writeObject(outMessage);
+                					out.flush();
+                					out.reset();
+                				}
+                				break;
             			
                 		}
                 		break;

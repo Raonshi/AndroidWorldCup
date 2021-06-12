@@ -10,6 +10,8 @@ public class voteDTO implements Serializable  {
 	int vote_item2;
 	int vote_item3;
 	String vote_day;
+	int vote_search;
+	
 	public String getVote_title() {
 		return vote_title;
 	}
@@ -45,6 +47,12 @@ public class voteDTO implements Serializable  {
 	}
 	public void setVote_day(String vote_day) {
 		this.vote_day = vote_day;
+	}
+	public int getVote_search() {
+		return vote_search;
+	}
+	public void setVote_search(int vote_search) {
+		this.vote_search = vote_search;
 	}
 	
 }

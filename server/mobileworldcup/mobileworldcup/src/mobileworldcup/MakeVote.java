@@ -103,7 +103,7 @@ public class MakeVote extends JFrame {
 	            	String vote_title = vote_title_txt.getText().toString();
 					int vote_item1 = 0;
 					int vote_item2 = 0;
-					int vote_item3=0;
+					int vote_item3= 0;
 					
 					SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd");
 					Date time = new Date();
@@ -116,6 +116,9 @@ public class MakeVote extends JFrame {
 					
 					voteDTO.setVote_title(vote_title);
 					voteDTO.setUser_id(user_id);
+					voteDTO.setVote_item1(vote_item1);
+					voteDTO.setVote_item2(vote_item2);
+					voteDTO.setVote_item3(vote_item3);
 					voteDTO.setVote_day(vote_day);
 					
 					System.out.println(vote_title);
