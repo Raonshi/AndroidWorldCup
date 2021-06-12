@@ -40,6 +40,7 @@
     <!-- 이하 여백에 화면 레이아웃을 작성할 것 -->
 
     <TextView
+        android:id="@+id/resultVoteTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"

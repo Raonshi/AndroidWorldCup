@@ -1,10 +1,10 @@
 package com.raon.androidworldcup;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -12,9 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.raon.androidworldcup.Communication.Client;
 import com.raon.androidworldcup.Communication.VoteClient;
-import com.raon.androidworldcup.Communication.voteDTO;
 
 public class JoinVoteActivity extends AppCompatActivity {
     //UI 객체들
@@ -83,13 +81,35 @@ public class JoinVoteActivity extends AppCompatActivity {
         });
 
 
-        //만약 현재 투표가 내가만든 투표라면 투표 불가 알림 출력
+        //만약 현재 투표가 내가만든 투표거나 로그인이 안된 상태라면 투표 불가 알림 출력
         if(AppData.Singleton().selectedVoteDTO.getUser_id().equals(AppData.Singleton().id)){
             AlertDialog.Builder loginAlert = new AlertDialog.Builder(JoinVoteActivity.this);
 
             loginAlert.setTitle("투표 알림");
             loginAlert.setMessage("본인이 만든 투표는 참가할 수 없습니다!");
-            loginAlert.setPositiveButton("확인", null);
+            loginAlert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            });
+            loginAlert.show();
+        }
+        else if(!AppData.Singleton().isLogin){
+            AlertDialog.Builder loginAlert = new AlertDialog.Builder(JoinVoteActivity.this);
+
+            loginAlert.setTitle("투표 알림");
+            loginAlert.setMessage("로그인 후 참가할 수 있습니다!");
+            loginAlert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            });
             loginAlert.show();
         }
     }
@@ -119,7 +139,7 @@ public class JoinVoteActivity extends AppCompatActivity {
             System.out.println(e.getMessage());
         }
 
-        if(AppData.Singleton().isJoin == true){
+        if(AppData.Singleton().isJoin){
             Intent intent = new Intent(getApplicationContext(), ResultVoteActivity.class);
             startActivity(intent);
         }

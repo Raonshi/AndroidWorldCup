@@ -59,7 +59,7 @@ public class VoteClient extends Thread {
                     voteDTO = new voteDTO();
                     System.out.println("MAINMAINMAIN");
                     AppData.Singleton().isMain = voteDTOCom(voteDTO, "select");
-                break;
+                    break;
                 //투표 생성
                 case "create":
                     //투표 생성 쿼리 실행

@@ -25,6 +25,9 @@ public class MyVoteActivity extends AppCompatActivity {
     //투표 리스트
     ArrayList<voteDTO> voteList;
 
+    //리스트 어댑터
+    VoteThumbnailAdapter adapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +35,8 @@ public class MyVoteActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         InitView();
+
+        GetVoteList();
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +47,7 @@ public class MyVoteActivity extends AppCompatActivity {
 
     void InitView(){
         backBtn = (ImageButton)findViewById(R.id.backBtn);
-        voteGrid = findViewById(R.id.mainVoteGrid);
+        voteGrid = findViewById(R.id.myVoteGrid);
     }
 
     /**
@@ -69,7 +74,7 @@ public class MyVoteActivity extends AppCompatActivity {
             System.out.println("리스트 받아왔다.");
 
             //어댑터를 그리드뷰에 연결
-            VoteThumbnailAdapter adapter = new VoteThumbnailAdapter(this);
+            adapter = new VoteThumbnailAdapter(this, "MyVoteActivity");
             voteGrid.setAdapter(adapter);
 
             //결과를 어댑터에 저장

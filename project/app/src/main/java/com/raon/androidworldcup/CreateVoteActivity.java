@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.raon.androidworldcup.Communication.Client;
 import com.raon.androidworldcup.Communication.VoteClient;
 import com.raon.androidworldcup.Communication.voteDTO;
 
@@ -70,6 +69,7 @@ public class CreateVoteActivity extends AppCompatActivity {
                 //투표 생성이 성공한 경우
                 if(AppData.Singleton().isCreate){
                     Toast.makeText(getApplicationContext(), "투표 생성 성공", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
                 else{
                     AlertDialog.Builder loginAlert = new AlertDialog.Builder(CreateVoteActivity.this);

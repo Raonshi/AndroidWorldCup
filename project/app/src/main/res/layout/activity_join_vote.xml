@@ -63,6 +63,9 @@
             android:layout_height="200dp"
             android:layout_weight="1"
             android:layout_margin="20dp"
+            android:text="닥전!"
+            android:textSize="30sp"
+            android:textStyle="bold"
             android:backgroundTint="@color/redBtn" />
 
         <Button
@@ -71,6 +74,9 @@
             android:layout_height="200dp"
             android:layout_weight="1"
             android:layout_margin="20dp"
+            android:text="닥후!"
+            android:textSize="30sp"
+            android:textStyle="bold"
             android:backgroundTint="@color/blueBtn" />
 
     </LinearLayout>

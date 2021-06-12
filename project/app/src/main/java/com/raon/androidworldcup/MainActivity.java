@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     //테마 컬러
     String themeColor;
 
-    //리스트 어댑터
     VoteThumbnailAdapter adapter;
 
     @Override
@@ -167,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         WidgetVisible();
+
+        GetVoteList();
     }
 
     /**
@@ -239,19 +240,17 @@ public class MainActivity extends AppCompatActivity {
             voteList = client.getVoteList();
             System.out.println("리스트 받아왔다.");
             
+            //어댑터 생성
+            adapter = new VoteThumbnailAdapter(this, "MainActivity");
+
             //어댑터를 그리드뷰에 연결
-            VoteThumbnailAdapter adapter = new VoteThumbnailAdapter(this);
             voteGrid.setAdapter(adapter);
-            
+
             //결과를 어댑터에 저장
             for(int i = 0; i < voteList.size(); i++){
                 //DTO리스트에서 DTO객체를 하나씩 호출
                 voteDTO dto = voteList.get(i);
-
-                //투표의 id값과 현재 로그인된 id값이 다를 경우에만 메인메뉴에 출력
-                if(!dto.getUser_id().equals(AppData.Singleton().id)){
-                    adapter.addItem(dto);
-                }
+                adapter.addItem(dto);
             }
         }
     }

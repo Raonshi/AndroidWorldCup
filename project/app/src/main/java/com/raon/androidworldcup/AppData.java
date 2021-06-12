@@ -11,9 +11,11 @@ import android.content.Context;
 
 import com.raon.androidworldcup.Communication.voteDTO;
 
+import java.util.ArrayList;
+
 public class AppData {
     //서버 정보
-    public String serverIP = "172.29.83.105";
+    public String serverIP = "172.30.1.36";
     public int serverPort = 8000;
 
 
@@ -29,7 +31,8 @@ public class AppData {
     //회원가입
     public String registerId = null;
 
-
+    //선택한 투표DTO
+    public ArrayList<voteDTO> voteList;
     //선택한 투표DTO
     public voteDTO selectedVoteDTO;
     //생성할 투표DTO
@@ -54,5 +57,17 @@ public class AppData {
 
     public void Init(){
         System.out.println("==================AppDataSingleton has Created=================");
+    }
+
+
+    public void Reset(){
+        isLogin = true;
+        isCheck = false;
+        isRegister = false;
+        selectedVoteDTO = null;
+        createVoteDTO = null;
+        isMain = false;
+        isCreate = false;
+        isJoin = false;
     }
 }
