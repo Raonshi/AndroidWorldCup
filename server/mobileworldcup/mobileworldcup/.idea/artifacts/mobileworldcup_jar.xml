@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="mobileworldcup:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/mobileworldcup_jar</output-path>
+    <root id="archive" name="mobileworldcup.jar">
+      <element id="module-output" name="mobileworldcup" />
+      <element id="library" level="module" name="mysql-connector-java-8.0.21.jar" module-name="mobileworldcup" />
+      <element id="extracted-dir" path="C:/Program Files (x86)/MySQL/Connector J 8.0/mysql-connector-java-8.0.25.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

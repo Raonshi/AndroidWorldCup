@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 //딜레이
                 try{
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                 }catch (InterruptedException e){
                     System.out.println(e.getMessage());
                 }

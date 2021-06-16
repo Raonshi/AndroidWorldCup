@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class AppData {
     //서버 정보
-    public String serverIP = "172.30.1.36";
+    public String serverIP = "52.231.66.86";
     public int serverPort = 8000;
 
 
